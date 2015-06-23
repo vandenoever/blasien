@@ -47,13 +47,13 @@ static const PQName p;
 static const SpanQName span;
 static const BrQName br;
 
-template <typename T, typename P>
-Writer<Writer<T,P>, QName> operator<(Writer<T,P>, const QName&) {
-    return Writer<Writer<T,P>, QName>();
+template <typename T, typename P, typename Q>
+Writer<Writer<T,P>, Q> operator<(Writer<T,P>, const Q&) {
+    return Writer<Writer<T,P>, Q>();
 }
 
 template <typename T, typename P>
-T operator>(Writer<T,P>, const QName&) {
+T operator>(Writer<T,P>, const P&) {
     return T();
 }
 
@@ -102,7 +102,7 @@ void test() {
         <body
           <(makeParagraph)
           <br>br
-          <f
+          //<f
           <br>br
         >body
       >html;
