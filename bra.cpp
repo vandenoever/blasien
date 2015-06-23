@@ -2,8 +2,11 @@
 
 namespace {
 
+template <int depth_ = 0>
 class Writer {
-
+public:
+    //using int d = depth_;
+    static const int depth = depth_;
 };
 
 struct QName {
@@ -47,31 +50,34 @@ static const BrQName br;
 struct EndElement {
 };
 
-Writer operator<(Writer a, QName) {
-    return a;
+template <int depth>
+Writer<depth+1> operator<(Writer<depth>, QName) {
+    return Writer<depth+1>();
 }
 
-Writer operator>(Writer a, QName) {
-    return a;
+template <int depth>
+Writer<depth-1> operator>(Writer<depth>, QName) {
+    return Writer<depth-1>();
 }
-
+/*
 Writer operator<=(Writer a, QName) {
     return a;
 }
+*/
 
-Writer operator<(Writer a, const char*) {
-    return a;
+template <int depth>
+Writer<depth+1> operator<(Writer<depth>, const char*) {
+    return Writer<depth+1>();
 }
-
-
-Writer operator<(Writer a, EndElement) {
-    return a;
+/*
+template <int depth>
+Writer<depth+1> operator<(Writer<depth> a, EndElement) {
+    return Writer<depth+1>();
 }
 
 Writer operator>(Writer a, EndElement) {
     return a;
 }
-
 EndElement operator!(EndElement) {
     return EndElement();
 }
@@ -80,7 +86,7 @@ EndElement end() {
     return EndElement();
 }
 void crazy() {
-    Writer a;
+    Writer<> a;
     a <html
         <head
           <title
@@ -171,32 +177,71 @@ void crazy5() {
         >body
       >html;
 }
+*/
 
-Writer
-makeParagraph(Writer w) {
-    return w
+
+template <int depth>
+Writer<depth>
+makeParagraph(Writer<depth> w) {
+    return w;
+    /*
     <p
       <"hello "
       <span
         <"world"
       >span
     >p;
+    */
+}
+
+
+Writer<>
+makeParagraph2(Writer<> w) {
+    return w;
+    /*
+    <p
+      <"hello "
+      <span
+        <"world"
+      >span
+    >p;
+    */
 }
 
 class Functor {
 public:
-    Writer operator()(Writer w) {return w;}
+    template<int depth>
+    Writer<depth> operator()(Writer<depth> w) {return w;}
 };
+/*
+template<typename F, int depth>
+auto operator<(Writer<depth> w, F f) -> decltype(f(w)) {
+    return f(w);
+}
+*/
 
-template<typename F>
-auto operator<(Writer w, F f) -> decltype(f(w)) {
+template<int depth>
+Writer<depth> operator<(Writer<depth> w, Writer<depth> (*f)(Writer<depth>)) {
+    return w;// f(w);
+}
+
+/*
+template<typename F, int depth>
+Writer<depth> operator<(Writer<depth> w, F f) {
     return f(w);
 }
 
+
+template<int depth>
+Writer<depth> operator<(Writer<depth> w, int f) {
+    return f(w);
+}
+*/
+
 void crazy6() {
     Functor f;
-    Writer a;
-    a <html
+    Writer<> a;
+    auto d = a <html
         <head
           <title
             <"hello world"
@@ -204,7 +249,10 @@ void crazy6() {
         >head
         <body
           <makeParagraph
-          <f
+          <br;//>br;
+
+    d
+          //<f
           <br>br
         >body
       >html;
