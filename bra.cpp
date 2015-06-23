@@ -2,11 +2,11 @@
 
 namespace {
 
-template <int depth_ = 0>
+template <typename T = int, typename P = int>
 class Writer {
 public:
-    //using int d = depth_;
-    static const int depth = depth_;
+    using Base = T;
+    using Tag = P;
 };
 
 struct QName {
@@ -47,24 +47,24 @@ static const PQName p;
 static const SpanQName span;
 static const BrQName br;
 
-template <int depth>
-Writer<depth+1> operator<(Writer<depth>, const QName&) {
-    return Writer<depth+1>();
+template <typename T, typename P>
+Writer<Writer<T,P>, QName> operator<(Writer<T,P>, const QName&) {
+    return Writer<Writer<T,P>, QName>();
 }
 
-template <int depth>
-Writer<depth-1> operator>(Writer<depth>, const QName&) {
-    return Writer<depth-1>();
+template <typename T, typename P>
+T operator>(Writer<T,P>, const QName&) {
+    return T();
 }
 
-template <int depth>
-Writer<depth> operator<(Writer<depth>, const char*) {
-    return Writer<depth>();
+template <typename T, typename P>
+Writer<T,P> operator<(Writer<T,P>, const char*) {
+    return Writer<T,P>();
 }
 
-template <int depth>
-Writer<depth>
-makeParagraph(Writer<depth> w) {
+template <typename T, typename P>
+Writer<T,P>
+makeParagraph(Writer<T,P> w) {
     return w
     <p
       <"hello "
@@ -76,17 +76,17 @@ makeParagraph(Writer<depth> w) {
 
 class Functor {
 public:
-    template<int depth>
-    Writer<depth> operator()(Writer<depth> w) {return w;}
+    template <typename T, typename P>
+    Writer<T,P> operator()(Writer<T,P> w) {return w;}
 };
 
-template<typename F, int depth>
-auto operator<(Writer<depth> w, F f) -> decltype(f(w)) {
+template<typename F, typename T, typename P>
+auto operator<(Writer<T,P> w, F f) -> decltype(f(w)) {
     return f(w);
 }
 
-template<int depth>
-Writer<depth> operator<(Writer<depth> w, Writer<depth> (*f)(Writer<depth>)) {
+template<typename T, typename P>
+Writer<T,P> operator<(Writer<T,P> w, Writer<T,P> (*f)(Writer<T,P>)) {
     return f(w);
 }
 
