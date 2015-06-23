@@ -2,11 +2,9 @@
 
 namespace {
 
-template <typename T = int, typename P = int>
+template <typename Base = int, typename Tag = int>
 class Writer {
 public:
-    using Base = T;
-    using Tag = P;
 };
 
 struct QName {
@@ -47,24 +45,24 @@ static const PQName p;
 static const SpanQName span;
 static const BrQName br;
 
-template <typename T, typename P, typename Q>
-Writer<Writer<T,P>, Q> operator<(Writer<T,P>, const Q&) {
-    return Writer<Writer<T,P>, Q>();
+template <typename Base, typename Tag, typename ChildTag>
+Writer<Writer<Base,Tag>, ChildTag> operator<(Writer<Base,Tag>, const ChildTag&) {
+    return Writer<Writer<Base,Tag>, ChildTag>();
 }
 
-template <typename T, typename P>
-T operator>(Writer<T,P>, const P&) {
-    return T();
+template <typename Base, typename Tag>
+Base operator>(Writer<Base,Tag>, const Tag&) {
+    return Base();
 }
 
-template <typename T, typename P>
-Writer<T,P> operator<(Writer<T,P>, const char*) {
-    return Writer<T,P>();
+template <typename Base, typename Tag>
+Writer<Base,Tag> operator<(Writer<Base,Tag>, const char*) {
+    return Writer<Base,Tag>();
 }
 
-template <typename T, typename P>
-Writer<T,P>
-makeParagraph(Writer<T,P> w) {
+template <typename Base, typename Tag>
+Writer<Base,Tag>
+makeParagraph(Writer<Base,Tag> w) {
     return w
     <p
       <"hello "
@@ -76,17 +74,17 @@ makeParagraph(Writer<T,P> w) {
 
 class Functor {
 public:
-    template <typename T, typename P>
-    Writer<T,P> operator()(Writer<T,P> w) {return w;}
+    template <typename Base, typename Tag>
+    Writer<Base,Tag> operator()(Writer<Base,Tag> w) {return w;}
 };
 
-template<typename F, typename T, typename P>
-auto operator<(Writer<T,P> w, F f) -> decltype(f(w)) {
+template<typename F, typename Base, typename Tag>
+auto operator<(Writer<Base,Tag> w, F f) -> decltype(f(w)) {
     return f(w);
 }
 
-template<typename T, typename P>
-Writer<T,P> operator<(Writer<T,P> w, Writer<T,P> (*f)(Writer<T,P>)) {
+template<typename Base, typename Tag>
+Writer<Base,Tag> operator<(Writer<Base,Tag> w, Writer<Base,Tag> (*f)(Writer<Base,Tag>)) {
     return f(w);
 }
 
