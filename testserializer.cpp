@@ -7,6 +7,7 @@ class TestSerializer : public QObject
     Q_OBJECT
 private Q_SLOTS: // tests
     void writeElement();
+    void writeElement_();
     void writeElements();
     void writeCharacters();
     void writeAttribute();
@@ -15,7 +16,26 @@ private Q_SLOTS: // tests
 
 namespace {
 
-QString xhtmlns = "http://www.w3.org/1999/xhtml";
+template <const QString* Ns, const QString* Name>
+struct XmlTag {
+    static const bool is_tag = true;
+    static const QName qname;
+    static const QString& ns() {
+        return qname.ns;
+    }
+    static const QString& name() {
+        return qname.name;
+    }
+};
+
+template <const QString* Ns, const QString* Name>
+const QName XmlTag<Ns, Name>::qname(*Ns, *Name);
+
+const QString htmlns = QStringLiteral("http://www.w3.org/1999/xhtml");
+const QString htmlTag = QStringLiteral("html");
+XmlTag<&htmlns, &htmlTag> html_;
+
+static QString xhtmlns = "http://www.w3.org/1999/xhtml";
 
 struct HtmlQName : public QName {
     HtmlQName() :QName(xhtmlns, "html") {}
@@ -51,6 +71,16 @@ TestSerializer::writeElement() {
     <html>html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"/>"));
 }
+
+void
+TestSerializer::writeElement_() {
+    QString r;
+    QXmlStreamWriter stream(&r);
+    XmlWriter<>(stream)
+    <html_>html_;
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"/>"));
+}
+
 
 void
 TestSerializer::writeElements() {

@@ -40,4 +40,11 @@ XmlWriter<Base,Tag> operator<(const XmlWriter<Base,Tag>& w, const QString& val) 
     return XmlWriter<Base,Tag>(w.writer);
 }
 
+template <typename Base, typename Tag, typename ChildTag>
+typename std::enable_if<ChildTag::is_tag,XmlWriter<XmlWriter<Base,Tag>, ChildTag>>::type
+operator<(const XmlWriter<Base,Tag>& w, const ChildTag& tag) {
+    w.writer.writeStartElement(tag.ns(), tag.name());
+    return XmlWriter<XmlWriter<Base,Tag>, ChildTag>(w.writer);
+}
+
 #endif // XMLWRITER_H
