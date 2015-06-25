@@ -2,27 +2,38 @@
 #define LITERALXML_H
 
 struct AttributeNode;
+template <typename Tag>
+struct ElementStart;
 
 struct QName {
-    const QString ns;
-    const QString name;
+    QString ns;
+    QString name;
     QName(const QString& ns_, const QString& name_) :ns(ns_), name(name_) {}
-    AttributeNode operator()(const QString& val) const;
-    AttributeNode operator=(const QString& val) const;
+    template <typename ElementStart>
+    ElementStart addAttributes(std::initializer_list<AttributeNode>) const;
 };
 
 struct AttributeNode {
-    const QName qname;
-    const QString value;
+    QName qname;
+    QString value;
     AttributeNode(const QName& q, const QString& v) :qname(q), value(v) {}
+    const AttributeNode& operator=(const AttributeNode& a) {
+        qname = a.qname;
+        value = a.value;
+        return a;
+    }
 };
 
+template <typename ElementStart>
+ElementStart QName::addAttributes(std::initializer_list<AttributeNode>) const {
+    return ElementStart(*this, QList<AttributeNode>());
+}
 
-AttributeNode QName::operator()(const QString& val) const {
-    return AttributeNode(*this, val);
-}
-AttributeNode QName::operator=(const QString& val) const {
-    return AttributeNode(*this, val);
-}
+template <typename Tag>
+struct ElementStart {
+    const QName qname;
+    const QList<AttributeNode> atts;
+    ElementStart(const QName& q, const QList<AttributeNode>& l) :qname(q), atts(l) {}
+};
 
 #endif // LITERALXML_H

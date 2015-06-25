@@ -11,4 +11,4 @@ QMAKE_CXXFLAGS = -std=c++11
 # Input
 HEADERS += XmlWriter.h \
     LiteralXml.h
-SOURCES += bra.cpp error.cpp main.cpp testserializer.cpp
+SOURCES += bra.cpp main.cpp testserializer.cpp

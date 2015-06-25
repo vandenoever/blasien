@@ -18,6 +18,16 @@ operator<(const XmlWriter<Base,Tag>& w, const ChildTag& tag) {
     return XmlWriter<XmlWriter<Base,Tag>, ChildTag>(w.writer);
 }
 
+template <typename Base, typename Tag, typename ChildTag>
+typename std::enable_if<std::is_base_of<QName,ChildTag>::value,XmlWriter<XmlWriter<Base,Tag>, ChildTag>>::type
+operator<(const XmlWriter<Base,Tag>& w, const ElementStart<ChildTag>& e) {
+    w.writer.writeStartElement(e.qname.ns, e.qname.name);
+    for (const AttributeNode& a: e.atts) {
+        w.writer.writeAttribute(a.qname.ns, a.qname.name, a.value);
+    }
+    return XmlWriter<XmlWriter<Base,Tag>, ChildTag>(w.writer);
+}
+
 template <typename Base, typename Tag>
 Base operator>(const XmlWriter<Base,Tag>& w, const Tag&) {
     w.writer.writeEndElement();
@@ -25,8 +35,9 @@ Base operator>(const XmlWriter<Base,Tag>& w, const Tag&) {
 }
 
 template <typename Base, typename Tag>
-XmlWriter<Base,Tag> operator<(XmlWriter<Base,Tag>, const char*) {
-    return XmlWriter<Base,Tag>();
+XmlWriter<Base,Tag> operator<(const XmlWriter<Base,Tag>& w, const QString& val) {
+    w.writer.writeCharacters(val);
+    return XmlWriter<Base,Tag>(w.writer);
 }
 
 #endif // XMLWRITER_H
