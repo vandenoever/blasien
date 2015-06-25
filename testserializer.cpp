@@ -11,6 +11,7 @@ private Q_SLOTS: // tests
     void writeCharacters();
     void writeAttribute();
     void writeAttributes();
+    void writeWithFunction();
     void writeWithFunctor();
 };
 
@@ -85,26 +86,42 @@ TestSerializer::writeAttributes() {
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head id=\"v1.1\" class=\"main\"/></n1:html>"));
 }
+template <typename Base, typename Tag>
+XmlWriter<Base,Tag>
+makeHead(XmlWriter<Base,Tag> w) {
+    return w
+    <head>head;
+}
+void
+TestSerializer::writeWithFunction() {
+    QString r;
+    QXmlStreamWriter stream(&r);
+    XmlWriter<>(stream)
+    <html
+      <makeHead
+    >html;
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head/></n1:html>"));
+}
 class Functor {
 public:
+    const QString text;
+    Functor(const QString& text_) :text(text_) {}
     template <typename Base, typename Tag>
     XmlWriter<Base,Tag> operator()(XmlWriter<Base,Tag> w) {
-        return w <head>head;
+        return w <head<text>head;
     }
 };
 void
 TestSerializer::writeWithFunctor() {
-    Functor f;
+    Functor f("HELLO");
     QString r;
     QXmlStreamWriter stream(&r);
     XmlWriter<>(stream)
     <html
       <f
     >html;
-    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head/></n1:html>"));
-
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head>HELLO</n1:head></n1:html>"));
 }
-
 
 QTEST_MAIN(TestSerializer)
 #include "testserializer.moc"

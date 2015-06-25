@@ -51,4 +51,9 @@ auto operator<(XmlWriter<Base,Tag> w, F f) -> decltype(f(w)) {
     return f(w);
 }
 
+template<typename Base, typename Tag>
+XmlWriter<Base,Tag> operator<(XmlWriter<Base,Tag> w, XmlWriter<Base,Tag> (*f)(XmlWriter<Base,Tag>)) {
+    return f(w);
+}
+
 #endif // XMLWRITER_H
