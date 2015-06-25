@@ -5,13 +5,40 @@ struct AttributeNode;
 template <typename Tag>
 struct ElementStart;
 
+
 struct QName {
-    QString ns;
-    QString name;
-    QName(const QString& ns_, const QString& name_) :ns(ns_), name(name_) {}
+    static const bool is_tag = true;
+    QString ns_;
+    QString name_;
+    QName(const QString& ns, const QString& name) :ns_(ns), name_(name) {}
+    const QString& ns() const { return ns_; }
+    const QString& name() const { return name_; }
     template <typename ElementStart>
     ElementStart addAttributes(std::initializer_list<AttributeNode>) const;
 };
+
+template <const QString* Ns, const QString* Name, bool isAttribute=true, bool isElement=true>
+struct XmlTag {
+    using Self = XmlTag<Ns, Name, isAttribute, isElement>;
+    static constexpr bool bla = false;
+    static constexpr bool is_tag = true;
+    static const QName qname;
+    static const QString& ns() {
+        return qname.ns();
+    }
+    static const QString& name() {
+        return qname.name();
+    }
+    ElementStart<Self>
+    operator()(std::initializer_list<AttributeNode> atts) const {
+        return ElementStart<Self>(qname, atts);
+    }
+    // set the attribute
+    AttributeNode operator=(const QString& val) const;
+};
+
+template <const QString* Ns, const QString* Name, bool isAttribute, bool isElement>
+const QName XmlTag<Ns, Name, isAttribute,isElement>::qname(*Ns, *Name);
 
 struct AttributeNode {
     QName qname;
@@ -23,6 +50,12 @@ struct AttributeNode {
         return a;
     }
 };
+
+template <const QString* Ns, const QString* Name, bool isAttribute, bool isElement>
+AttributeNode
+XmlTag<Ns,Name,isAttribute,isElement>::operator=(const QString& val) const {
+    return AttributeNode(qname, val);
+}
 
 template <typename ElementStart>
 ElementStart QName::addAttributes(std::initializer_list<AttributeNode>) const {
