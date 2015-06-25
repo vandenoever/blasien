@@ -13,6 +13,7 @@ private Q_SLOTS: // tests
     void writeAttributes();
     void writeWithFunction();
     void writeWithFunctor();
+    void writeListWithFunctor();
 };
 
 namespace {
@@ -122,6 +123,29 @@ TestSerializer::writeWithFunctor() {
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head>HELLO</n1:head></n1:html>"));
 }
+class ListFunctor {
+public:
+    const std::list<QString> texts;
+    ListFunctor(const std::list<QString>& texts_) :texts(texts_) {}
+    template <typename Base, typename Tag>
+    XmlWriter<Base,Tag> operator()(XmlWriter<Base,Tag> w) {
+        for (const QString& t: texts) {
+            w <head <t >head;
+        }
+        return w;
+    }
+};
+void
+TestSerializer::writeListWithFunctor() {
+    ListFunctor f({"A","B"});
+    QString r;
+    QXmlStreamWriter stream(&r);
+    XmlWriter<>(stream)
+    <html
+      <f
+    >html;
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head>A</n1:head><n1:head>B</n1:head></n1:html>"));
+}
 
-QTEST_MAIN(TestSerializer)
+QTEST_APPLESS_MAIN(TestSerializer)
 #include "testserializer.moc"
