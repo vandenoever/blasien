@@ -88,7 +88,9 @@ TestSerializer::writeAttributes() {
 class Functor {
 public:
     template <typename Base, typename Tag>
-    XmlWriter<Base,Tag> operator()(XmlWriter<Base,Tag> w) {return w;}
+    XmlWriter<Base,Tag> operator()(XmlWriter<Base,Tag> w) {
+        return w <head>head;
+    }
 };
 void
 TestSerializer::writeWithFunctor() {
@@ -99,6 +101,8 @@ TestSerializer::writeWithFunctor() {
     <html
       <f
     >html;
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head/></n1:html>"));
+
 }
 
 
