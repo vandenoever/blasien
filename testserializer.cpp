@@ -21,10 +21,13 @@ const QString htmlTag = QStringLiteral("html");
 const QString headTag = QStringLiteral("head");
 const QString titleTag = QStringLiteral("title");
 const QString idTag = QStringLiteral("id");
+const QString classTag = QStringLiteral("class");
+const QString empty;
 XmlTag<&htmlns, &htmlTag, false, true> html;
 XmlTag<&htmlns, &headTag, false, true> head;
 XmlTag<&htmlns, &titleTag, false, true> title;
-XmlTag<&htmlns, &idTag, true, false> id;
+XmlTag<&empty, &idTag, true, false> id;
+XmlTag<&empty, &classTag, true, false> class_;
 }
 
 void
@@ -73,6 +76,14 @@ TestSerializer::writeAttribute() {
 }
 void
 TestSerializer::writeAttributes() {
+    QString r;
+    QXmlStreamWriter stream(&r);
+    XmlWriter<>(stream)
+    <html
+      <head({id="v1.1",class_="main"})
+      >head
+    >html;
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head id=\"v1.1\" class=\"main\"/></n1:html>"));
 }
 class Functor {
 public:
