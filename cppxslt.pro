@@ -1,5 +1,5 @@
 TEMPLATE = subdirs
-CONFIG += ordered testcase
+CONFIG += ordered
 SUBDIRS = tests
 
 HEADERS = LiteralXml.h  XmlWriter.h
