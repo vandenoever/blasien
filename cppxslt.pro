@@ -2,5 +2,5 @@ TEMPLATE = subdirs
 CONFIG += ordered testcase
 SUBDIRS = tests
 
-HEADERS += XmlWriter.h \
-    LiteralXml.h
+HEADERS = LiteralXml.h  XmlWriter.h
+SOURCES = bra.cpp main.cpp
