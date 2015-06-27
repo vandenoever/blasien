@@ -4,7 +4,7 @@
 #include <QXmlStreamWriter>
 #include <LiteralXml.h>
 
-template <typename Base = int, typename Tag = int>
+template <typename Base = void, typename Tag = void>
 class XmlWriter {
 public:
     QXmlStreamWriter& writer;
