@@ -26,12 +26,15 @@ operator<(const XmlBuilder<Base,Tag>& b, const ChildTag& tag) {
 
 template <typename Base, typename Tag, typename ChildTag>
 typename std::enable_if<ChildTag::is_tag,XmlBuilder<XmlBuilder<Base,Tag>, ChildTag>>::type
-operator<(const XmlBuilder<Base,Tag>& w, const ElementStart<ChildTag>& e) {
-    w.writer.writeStartElement(e.qname.ns(), e.qname.name());
-    for (const AttributeNode& a: e.atts) {
-        w.writer.writeAttribute(a.qname.ns(), a.qname.name(), a.value);
+operator<(const XmlBuilder<Base,Tag>& b, const ElementStart<ChildTag>& es) {
+    QDomNode node = b.node;
+    QDomDocument doc = node.ownerDocument();
+    QDomElement e = doc.createElementNS(es.qname.ns(), es.qname.name());
+    for (const AttributeNode& a: es.atts) {
+        e.setAttributeNS(a.qname.ns(), a.qname.name(), a.value);
     }
-    return XmlBuilder<XmlBuilder<Base,Tag>, ChildTag>(w.writer);
+    node.appendChild(e);
+    return XmlBuilder<XmlBuilder<Base,Tag>, ChildTag>(e);
 }
 
 template <typename Base, typename Tag>
@@ -40,15 +43,19 @@ Base operator>(const XmlBuilder<Base,Tag>& b, const Tag&) {
 }
 
 template <typename Base, typename Tag>
-XmlBuilder<Base,Tag> operator<(const XmlBuilder<Base,Tag>& w, const char* val) {
-    w.writer.writeCharacters(val);
-    return XmlBuilder<Base,Tag>(w.writer);
+XmlBuilder<Base,Tag> operator<(const XmlBuilder<Base,Tag>& b, const char* val) {
+    QDomNode node = b.node;
+    QDomDocument doc = node.ownerDocument();
+    node.appendChild(doc.createTextNode(val));
+    return b;
 }
 
 template <typename Base, typename Tag>
-XmlBuilder<Base,Tag> operator<(const XmlBuilder<Base,Tag>& w, const QString& val) {
-    w.writer.writeCharacters(val);
-    return XmlBuilder<Base,Tag>(w.writer);
+XmlBuilder<Base,Tag> operator<(const XmlBuilder<Base,Tag>& b, const QString& val) {
+    QDomNode node = b.node;
+    QDomDocument doc = node.ownerDocument();
+    node.appendChild(doc.createTextNode(val));
+    return b;
 }
 
 template<typename F, typename Base, typename Tag>

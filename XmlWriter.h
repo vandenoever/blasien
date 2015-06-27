@@ -37,13 +37,13 @@ Base operator>(const XmlWriter<Base,Tag>& w, const Tag&) {
 template <typename Base, typename Tag>
 XmlWriter<Base,Tag> operator<(const XmlWriter<Base,Tag>& w, const char* val) {
     w.writer.writeCharacters(val);
-    return XmlWriter<Base,Tag>(w.writer);
+    return w;
 }
 
 template <typename Base, typename Tag>
 XmlWriter<Base,Tag> operator<(const XmlWriter<Base,Tag>& w, const QString& val) {
     w.writer.writeCharacters(val);
-    return XmlWriter<Base,Tag>(w.writer);
+    return w;
 }
 
 template<typename F, typename Base, typename Tag>

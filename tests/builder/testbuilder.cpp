@@ -36,7 +36,6 @@ XmlTag<&empty, &classTag, true, false> class_;
 void
 TestBuilder::buildElement() {
     QDomDocument dom("test");
-    Q_ASSERT(!dom.isNull());
     XmlBuilder<>(dom)
     <html>html;
     QCOMPARE(dom.childNodes().length(), 1);
@@ -47,14 +46,88 @@ TestBuilder::buildElement() {
 
 void
 TestBuilder::buildElements() {
+    QDomDocument dom("test");
+    XmlBuilder<>(dom)
+    <html
+      <head>head
+    >html;
+    QCOMPARE(dom.childNodes().length(), 1);
+    QDomNode n = dom.firstChild();
+    QCOMPARE(n.namespaceURI(), html.ns());
+    QCOMPARE(n.localName(), html.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), head.ns());
+    QCOMPARE(n.localName(), head.name());
 }
 void
-TestBuilder::buildCharacters() {}
+TestBuilder::buildCharacters() {
+    QDomDocument dom("test");
+    XmlBuilder<>(dom)
+    <html
+      <head
+        <title
+          <"Hello world"
+        >title
+      >head
+    >html;
+    QCOMPARE(dom.childNodes().length(), 1);
+    QDomNode n = dom.firstChild();
+    QCOMPARE(n.namespaceURI(), html.ns());
+    QCOMPARE(n.localName(), html.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), head.ns());
+    QCOMPARE(n.localName(), head.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), title.ns());
+    QCOMPARE(n.localName(), title.name());
+    QCOMPARE(n.childNodes().length(), 1);
+}
 void
 TestBuilder::buildAttribute() {
+    QDomDocument dom("test");
+    XmlBuilder<>(dom)
+    <html
+      <head({id="v1.1"})
+      >head
+    >html;
+    QCOMPARE(dom.childNodes().length(), 1);
+    QDomNode n = dom.firstChild();
+    QCOMPARE(n.namespaceURI(), html.ns());
+    QCOMPARE(n.localName(), html.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), head.ns());
+    QCOMPARE(n.localName(), head.name());
+    QCOMPARE(n.attributes().count(), 1);
+    QDomNode a = n.attributes().item(0);
+    QCOMPARE(a.namespaceURI(), id.ns());
+    QCOMPARE(a.localName(), id.name());
+    QCOMPARE(a.nodeValue(), QString("v1.1"));
 }
 void
 TestBuilder::buildAttributes() {
+    QDomDocument dom("test");
+    XmlBuilder<>(dom)
+    <html
+      <head({id="v1.1",class_="main"})
+      >head
+    >html;
+    QCOMPARE(dom.childNodes().length(), 1);
+    QDomNode n = dom.firstChild();
+    QCOMPARE(n.namespaceURI(), html.ns());
+    QCOMPARE(n.localName(), html.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), head.ns());
+    QCOMPARE(n.localName(), head.name());
+    QCOMPARE(n.attributes().count(), 2);
+    QDomNode a = n.attributes().namedItem(id.name());
+    QCOMPARE(a.nodeValue(), QString("v1.1"));
+    a = n.attributes().namedItem(class_.name());
+    QCOMPARE(a.nodeValue(), QString("main"));
 }
 template <typename Base, typename Tag>
 XmlBuilder<Base,Tag>
@@ -64,6 +137,19 @@ makeHead(XmlBuilder<Base,Tag> w) {
 }
 void
 TestBuilder::buildWithFunction() {
+    QDomDocument dom("test");
+    XmlBuilder<>(dom)
+    <html
+      <makeHead
+    >html;
+    QCOMPARE(dom.childNodes().length(), 1);
+    QDomNode n = dom.firstChild();
+    QCOMPARE(n.namespaceURI(), html.ns());
+    QCOMPARE(n.localName(), html.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), head.ns());
+    QCOMPARE(n.localName(), head.name());
 }
 class Functor {
 public:
@@ -76,6 +162,23 @@ public:
 };
 void
 TestBuilder::buildWithFunctor() {
+    Functor f("HELLO");
+    QDomDocument dom("test");
+    XmlBuilder<>(dom)
+    <html
+      <f
+    >html;
+    QCOMPARE(dom.childNodes().length(), 1);
+    QDomNode n = dom.firstChild();
+    QCOMPARE(n.namespaceURI(), html.ns());
+    QCOMPARE(n.localName(), html.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), head.ns());
+    QCOMPARE(n.localName(), head.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    QDomNode t = n.firstChild();
+    QCOMPARE(t.nodeValue(), QString("HELLO"));
 }
 class ListFunctor {
 public:
@@ -91,6 +194,29 @@ public:
 };
 void
 TestBuilder::buildListWithFunctor() {
+    ListFunctor f({"A","B"});
+    QDomDocument dom("test");
+    XmlBuilder<>(dom)
+    <html
+      <f
+    >html;
+    QCOMPARE(dom.childNodes().length(), 1);
+    QDomNode n = dom.firstChild();
+    QCOMPARE(n.namespaceURI(), html.ns());
+    QCOMPARE(n.localName(), html.name());
+    QCOMPARE(n.childNodes().length(), 2);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), head.ns());
+    QCOMPARE(n.localName(), head.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    QDomNode t = n.firstChild();
+    QCOMPARE(t.nodeValue(), QString("A"));
+    n = n.nextSibling();
+    QCOMPARE(n.namespaceURI(), head.ns());
+    QCOMPARE(n.localName(), head.name());
+    QCOMPARE(n.childNodes().length(), 1);
+    t = n.firstChild();
+    QCOMPARE(t.nodeValue(), QString("B"));
 }
 
 
