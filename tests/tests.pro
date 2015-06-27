@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 CONFIG += ordered
-SUBDIRS = serializer xpath
+SUBDIRS = serializer xpath builder
