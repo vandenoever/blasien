@@ -20,7 +20,6 @@ struct QName {
 template <const QString* Ns, const QString* Name, bool isAttribute=true, bool isElement=true>
 struct XmlTag {
     using Self = XmlTag<Ns, Name, isAttribute, isElement>;
-    static constexpr bool bla = false;
     static constexpr bool is_tag = true;
     static const QName qname;
     static const QString& ns() {

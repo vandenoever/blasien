@@ -36,18 +36,17 @@ XmlTag<&empty, &classTag, true, false> class_;
 void
 TestBuilder::buildElement() {
     QDomDocument dom("test");
-    XmlBuilder<>(dom)
+    XmlBuilder(dom)
     <html>html;
     QCOMPARE(dom.childNodes().length(), 1);
     QDomNode n = dom.firstChild();
     QCOMPARE(n.namespaceURI(), html.ns());
     QCOMPARE(n.localName(), html.name());
 }
-
 void
 TestBuilder::buildElements() {
     QDomDocument dom("test");
-    XmlBuilder<>(dom)
+    XmlBuilder(dom)
     <html
       <head>head
     >html;
@@ -63,7 +62,7 @@ TestBuilder::buildElements() {
 void
 TestBuilder::buildCharacters() {
     QDomDocument dom("test");
-    XmlBuilder<>(dom)
+    XmlBuilder(dom)
     <html
       <head
         <title
@@ -88,7 +87,7 @@ TestBuilder::buildCharacters() {
 void
 TestBuilder::buildAttribute() {
     QDomDocument dom("test");
-    XmlBuilder<>(dom)
+    XmlBuilder(dom)
     <html
       <head({id="v1.1"})
       >head
@@ -110,7 +109,7 @@ TestBuilder::buildAttribute() {
 void
 TestBuilder::buildAttributes() {
     QDomDocument dom("test");
-    XmlBuilder<>(dom)
+    XmlBuilder(dom)
     <html
       <head({id="v1.1",class_="main"})
       >head
@@ -130,15 +129,15 @@ TestBuilder::buildAttributes() {
     QCOMPARE(a.nodeValue(), QString("main"));
 }
 template <typename Base, typename Tag>
-XmlBuilder<Base,Tag>
-makeHead(XmlBuilder<Base,Tag> w) {
+XmlSink<Base,Tag>
+makeHead(const XmlSink<Base,Tag>& w) {
     return w
     <head>head;
 }
 void
 TestBuilder::buildWithFunction() {
     QDomDocument dom("test");
-    XmlBuilder<>(dom)
+    XmlBuilder(dom)
     <html
       <makeHead
     >html;
@@ -156,7 +155,7 @@ public:
     const QString text;
     Functor(const QString& text_) :text(text_) {}
     template <typename Base, typename Tag>
-    XmlBuilder<Base,Tag> operator()(XmlBuilder<Base,Tag> w) {
+    XmlSink<Base,Tag> operator()(XmlSink<Base,Tag> w) {
         return w <head<text>head;
     }
 };
@@ -164,7 +163,7 @@ void
 TestBuilder::buildWithFunctor() {
     Functor f("HELLO");
     QDomDocument dom("test");
-    XmlBuilder<>(dom)
+    XmlBuilder(dom)
     <html
       <f
     >html;
@@ -185,7 +184,7 @@ public:
     const std::list<QString> texts;
     ListFunctor(const std::list<QString>& texts_) :texts(texts_) {}
     template <typename Base, typename Tag>
-    XmlBuilder<Base,Tag> operator()(XmlBuilder<Base,Tag> w) {
+    XmlSink<Base,Tag> operator()(const XmlSink<Base,Tag>& w) {
         for (const QString& t: texts) {
             w <head <t >head;
         }
@@ -196,7 +195,7 @@ void
 TestBuilder::buildListWithFunctor() {
     ListFunctor f({"A","B"});
     QDomDocument dom("test");
-    XmlBuilder<>(dom)
+    XmlBuilder(dom)
     <html
       <f
     >html;
@@ -218,7 +217,6 @@ TestBuilder::buildListWithFunctor() {
     t = n.firstChild();
     QCOMPARE(t.nodeValue(), QString("B"));
 }
-
 
 QTEST_APPLESS_MAIN(TestBuilder)
 #include "testbuilder.moc"
