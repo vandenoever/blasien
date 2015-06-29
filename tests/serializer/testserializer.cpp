@@ -36,7 +36,7 @@ void
 TestSerializer::writeElement() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter<>(stream)
+    XmlWriter(stream)
     <html>html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"/>"));
 }
@@ -44,7 +44,7 @@ void
 TestSerializer::writeElements() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter<>(stream)
+    XmlWriter(stream)
     <html
       <head>head
     >html;
@@ -54,7 +54,7 @@ void
 TestSerializer::writeCharacters() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter<>(stream)
+    XmlWriter(stream)
     <html
       <head
         <title
@@ -68,7 +68,7 @@ void
 TestSerializer::writeAttribute() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter<>(stream)
+    XmlWriter(stream)
     <html
       <head({id="v1.1"})
       >head
@@ -79,7 +79,7 @@ void
 TestSerializer::writeAttributes() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter<>(stream)
+    XmlWriter(stream)
     <html
       <head({id="v1.1",class_="main"})
       >head
@@ -96,7 +96,7 @@ void
 TestSerializer::writeWithFunction() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter<>(stream)
+    XmlWriter(stream)
     <html
       <makeHead
     >html;
@@ -116,7 +116,7 @@ TestSerializer::writeWithFunctor() {
     Functor f("HELLO");
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter<>(stream)
+    XmlWriter(stream)
     <html
       <f
     >html;
@@ -139,7 +139,7 @@ TestSerializer::writeListWithFunctor() {
     ListFunctor f({"A","B"});
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter<>(stream)
+    XmlWriter(stream)
     <html
       <f
     >html;
