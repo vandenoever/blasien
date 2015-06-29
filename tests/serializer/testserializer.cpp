@@ -40,7 +40,6 @@ TestSerializer::writeElement() {
     <html>html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"/>"));
 }
-
 void
 TestSerializer::writeElements() {
     QString r;

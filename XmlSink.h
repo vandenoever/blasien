@@ -6,7 +6,7 @@ class XmlSink {
 public:
     static constexpr bool is_xmlsink = true;
     const Base& base;
-    XmlSink(const Base& b) :base(b) {}
+    inline XmlSink(const Base& b) :base(b) {}
     template <typename ChildTag>
     inline void startElement(const ChildTag& tag) const {
         base.startElement(tag);
@@ -14,11 +14,12 @@ public:
     inline void endElement() const {
         base.endElement();
     }
-    template <typename ChildTag>
-    inline void writeAttribute(const ChildTag& tag, const QString& value) const {
+    template <typename ChildTag, typename String>
+    inline void writeAttribute(const ChildTag& tag, const String& value) const {
         base.writeAttribute(tag, value);
     }
-    inline void writeCharacters(const QString& val) const {
+    template <typename String>
+    inline void writeCharacters(const String& val) const {
         base.writeCharacters(val);
     }
 };
@@ -52,17 +53,16 @@ XmlSink<Base,Tag> operator<(const XmlSink<Base,Tag>& sink, const char* val) {
     return sink;
 }
 
-template <typename Base, typename Tag>
-XmlSink<Base,Tag> operator<(const XmlSink<Base,Tag>& sink, const QString& val) {
+template <typename Sink>
+typename std::enable_if<Sink::is_xmlsink,Sink>::type
+operator<(const Sink& sink, const QString& val) {
     sink.writeCharacters(val);
     return sink;
 }
-
 template<typename F, typename Sink>
 auto operator<(const Sink& sink, F f) -> decltype(f(sink)) {
     return f(sink);
 }
-
 template<typename Sink>
 Sink operator<(const Sink& sink, Sink (*f)(const Sink&)) {
     return f(sink);

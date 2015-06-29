@@ -12,17 +12,17 @@ public:
     QXmlStreamWriter& writer;
     explicit XmlWriter(QXmlStreamWriter& w) :writer(w) {}
     template <typename ChildTag>
-    void startElement(const ChildTag &tag) const {
+    inline void startElement(const ChildTag &tag) const {
         writer.writeStartElement(tag.ns(), tag.name());
     }
-    void endElement() const {
+    inline void endElement() const {
         writer.writeEndElement();
     }
     template <typename ChildTag>
-    void writeAttribute(const ChildTag &tag, const QString& value) const {
+    inline void writeAttribute(const ChildTag &tag, const QString& value) const {
         writer.writeAttribute(tag.ns(), tag.name(), value);
     }
-    void writeCharacters(const QString& value) const {
+    inline void writeCharacters(const QString& value) const {
         writer.writeCharacters(value);
     }
 };
