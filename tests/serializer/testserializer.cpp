@@ -88,8 +88,8 @@ TestSerializer::writeAttributes() {
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head id=\"v1.1\" class=\"main\"/></n1:html>"));
 }
 template <typename Base, typename Tag>
-XmlWriter<Base,Tag>
-makeHead(XmlWriter<Base,Tag> w) {
+XmlSink<Base,Tag>
+makeHead(const XmlSink<Base,Tag>& w) {
     return w
     <head>head;
 }
@@ -108,7 +108,7 @@ public:
     const QString text;
     Functor(const QString& text_) :text(text_) {}
     template <typename Base, typename Tag>
-    XmlWriter<Base,Tag> operator()(XmlWriter<Base,Tag> w) {
+    XmlSink<Base,Tag> operator()(const XmlSink<Base,Tag>& w) {
         return w <head<text>head;
     }
 };
@@ -128,7 +128,7 @@ public:
     const std::list<QString> texts;
     ListFunctor(const std::list<QString>& texts_) :texts(texts_) {}
     template <typename Base, typename Tag>
-    XmlWriter<Base,Tag> operator()(XmlWriter<Base,Tag> w) {
+    XmlSink<Base,Tag> operator()(XmlSink<Base,Tag> w) {
         for (const QString& t: texts) {
             w <head <t >head;
         }

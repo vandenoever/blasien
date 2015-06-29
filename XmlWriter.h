@@ -3,57 +3,28 @@
 
 #include <QXmlStreamWriter>
 #include <LiteralXml.h>
+#include <XmlSink.h>
 
 template <typename Base = void, typename Tag = void>
 class XmlWriter {
 public:
+    static constexpr bool is_xmlsink = true;
     QXmlStreamWriter& writer;
     explicit XmlWriter(QXmlStreamWriter& w) :writer(w) {}
-};
-
-template <typename Base, typename Tag, typename ChildTag>
-typename std::enable_if<ChildTag::is_tag,XmlWriter<XmlWriter<Base,Tag>, ChildTag>>::type
-operator<(const XmlWriter<Base,Tag>& w, const ChildTag& tag) {
-    w.writer.writeStartElement(tag.ns(), tag.name());
-    return XmlWriter<XmlWriter<Base,Tag>, ChildTag>(w.writer);
-}
-
-template <typename Base, typename Tag, typename ChildTag>
-typename std::enable_if<ChildTag::is_tag,XmlWriter<XmlWriter<Base,Tag>, ChildTag>>::type
-operator<(const XmlWriter<Base,Tag>& w, const ElementStart<ChildTag>& e) {
-    w.writer.writeStartElement(e.qname.ns(), e.qname.name());
-    for (const AttributeNode& a: e.atts) {
-        w.writer.writeAttribute(a.qname.ns(), a.qname.name(), a.value);
+    template <typename ChildTag>
+    void startElement(const ChildTag &tag) const {
+        writer.writeStartElement(tag.ns(), tag.name());
     }
-    return XmlWriter<XmlWriter<Base,Tag>, ChildTag>(w.writer);
-}
-
-template <typename Base, typename Tag>
-Base operator>(const XmlWriter<Base,Tag>& w, const Tag&) {
-    w.writer.writeEndElement();
-    return Base(w.writer);
-}
-
-template <typename Base, typename Tag>
-XmlWriter<Base,Tag> operator<(const XmlWriter<Base,Tag>& w, const char* val) {
-    w.writer.writeCharacters(val);
-    return w;
-}
-
-template <typename Base, typename Tag>
-XmlWriter<Base,Tag> operator<(const XmlWriter<Base,Tag>& w, const QString& val) {
-    w.writer.writeCharacters(val);
-    return w;
-}
-
-template<typename F, typename Base, typename Tag>
-auto operator<(XmlWriter<Base,Tag> w, F f) -> decltype(f(w)) {
-    return f(w);
-}
-
-template<typename Base, typename Tag>
-XmlWriter<Base,Tag> operator<(XmlWriter<Base,Tag> w, XmlWriter<Base,Tag> (*f)(XmlWriter<Base,Tag>)) {
-    return f(w);
-}
+    void endElement() const {
+        writer.writeEndElement();
+    }
+    template <typename ChildTag>
+    void writeAttribute(const ChildTag &tag, const QString& value) const {
+        writer.writeAttribute(tag.ns(), tag.name(), value);
+    }
+    void writeCharacters(const QString& value) const {
+        writer.writeCharacters(value);
+    }
+};
 
 #endif // XMLWRITER_H
