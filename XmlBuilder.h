@@ -9,16 +9,13 @@
 class XmlBuilder {
 public:
     static constexpr bool is_xmlsink = true;
-    QDomDocument* doc;
+    QDomDocument doc;
     QDomNode& node;
-    explicit XmlBuilder(QDomNode& n) :doc(new QDomDocument(node.ownerDocument())), node(n) {
+    explicit XmlBuilder(QDomNode& n) :node(n) {
         Q_ASSERT(!node.isNull());
     }
-    explicit XmlBuilder(QDomDocument& d) :doc(new QDomDocument(d)), node(*doc) {
+    explicit XmlBuilder(QDomDocument& d) :doc(d), node(d) {
         Q_ASSERT(!d.isNull());
-    }
-    ~XmlBuilder() {
-        //delete doc;
     }
     template <typename Tag>
     void startElement(const Tag &tag) const {
