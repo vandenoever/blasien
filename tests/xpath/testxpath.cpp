@@ -10,8 +10,12 @@ private Q_SLOTS: // tests
     void iterateWithTag();
     void iterateWithTags();
     void iterateWithOr();
+    void iterateSelfWithDeepTags();
     void iterateWithDeepTags();
-
+    void iterateWithTwoDeepTags();
+    void iterateWithChildTag();
+    void iterateWithMissingChildTag();
+    void iterateWithChildTags();
 };
 
 namespace {
@@ -92,6 +96,17 @@ TestXPath::iterateWithOr() {
 }
 
 void
+TestXPath::iterateSelfWithDeepTags() {
+    QDomDocument dom = getExampleDoc1();
+    QDomElement h = dom.firstChildElement();
+    int count = 0;
+    for (auto node: h%html) {
+        ++count;
+    }
+    QCOMPARE(count, 1);
+}
+
+void
 TestXPath::iterateWithDeepTags() {
     QDomDocument dom = getExampleDoc1();
     int count = 0;
@@ -99,7 +114,37 @@ TestXPath::iterateWithDeepTags() {
         ++count;
     }
     QCOMPARE(count, 3);
+}
 
+void
+TestXPath::iterateWithTwoDeepTags() {
+    QDomDocument dom = getExampleDoc1();
+    int count = 0;
+    for (auto node: dom%html%p) {
+        ++count;
+    }
+    QCOMPARE(count, 3);
+}
+void
+TestXPath::iterateWithChildTag() {
+    QDomDocument dom = getExampleDoc1();
+    int count = 0;
+    for (auto node: dom/html[body]) {
+        ++count;
+    }
+    QCOMPARE(count, 1);
+}
+void
+TestXPath::iterateWithMissingChildTag() {
+    QDomDocument dom = getExampleDoc1();
+    int count = 0;
+    for (auto node: dom/html[p]) {
+        ++count;
+    }
+    QCOMPARE(count, 0);
+}
+void
+TestXPath::iterateWithChildTags() {
 }
 
 QTEST_APPLESS_MAIN(TestXPath)

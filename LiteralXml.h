@@ -17,6 +17,13 @@ struct QName {
     ElementStart addAttributes(std::initializer_list<AttributeNode>) const;
 };
 
+template <typename Filter, typename SubFilter>
+struct XmlFilter {
+    const Filter filter;
+    const SubFilter subFilter;
+    XmlFilter(const Filter& filter_, const SubFilter& subFilter_) :filter(filter_), subFilter(subFilter_) {}
+};
+
 template <const QString* Ns, const QString* Name, bool isAttribute=true, bool isElement=true>
 struct XmlTag {
     using Self = XmlTag<Ns, Name, isAttribute, isElement>;
@@ -31,6 +38,11 @@ struct XmlTag {
     ElementStart<Self>
     operator()(std::initializer_list<AttributeNode> atts) const {
         return ElementStart<Self>(qname, atts);
+    }
+    template <typename T>
+    XmlFilter<Self,T>
+    operator[](const T& t) const {
+        return XmlFilter<Self,T>(*this, t);
     }
     // set the attribute
     AttributeNode operator=(const QString& val) const;

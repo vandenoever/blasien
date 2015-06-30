@@ -1,10 +1,10 @@
 #ifndef XMLPATH_H
 #define XMLPATH_H
 
+#include <LiteralXml.h>
 #include <utility>
 
 #include <QDomDocument>
-
 
 template <typename Tag1, typename Tag2>
 typename std::enable_if<Tag1::is_tag && Tag2::is_tag,std::pair<Tag1,Tag2>>::type
@@ -24,6 +24,21 @@ node_filter_matches(const QDomNode& n, const std::pair<A,B>& p) {
     return node_filter_matches(n, p.first) || node_filter_matches(n, p.second);
 }
 
+template <typename A, typename B>
+bool
+node_filter_matches(const QDomNode& n, const XmlFilter<A,B>& f) {
+    bool m = node_filter_matches(n, f.filter);
+    bool cm = false;
+    if (m) {
+        QDomNode c = n.firstChild();
+        while (!cm && !c.isNull()) {
+            cm = node_filter_matches(c, f.subFilter);
+            c = c.nextSibling();
+        }
+    }
+    return cm;
+}
+
 template <typename Filter>
 std::list<QDomNode>
 operator/(const QDomNode& node, const Filter& filter) {
@@ -38,12 +53,12 @@ operator/(const QDomNode& node, const Filter& filter) {
     return list;
 }
 
-template <typename Tag>
+template <typename Filter>
 std::list<QDomNode>
-operator/(const std::list<QDomNode>& nodes, const Tag& tag) {
+operator/(const std::list<QDomNode>& nodes, const Filter& filter) {
     std::list<QDomNode> list;
     for (const auto& l: nodes) {
-        auto i = l/tag;
+        auto i = l/filter;
         for (const auto& n: i) {
             list.push_back(n);
         }
@@ -51,24 +66,38 @@ operator/(const std::list<QDomNode>& nodes, const Tag& tag) {
     return list;
 }
 
+// % is used instead of the xpath expression //
+// // means self-or-descendant
 template <typename Filter>
 std::list<QDomNode>
 operator%(const QDomNode& node, const Filter& filter) {
     std::list<QDomNode> list;
+    // check self::
+    if (node_filter_matches(node, filter)) {
+        list.push_back(node);
+    }
+    // recurse
     QDomNode n = node.firstChild();
     while (!n.isNull()) {
-        if (node_filter_matches(n, filter)) {
-            list.push_back(n);
-        }
-        auto c = n%filter;
-        for (const auto& n: c) {
-            list.push_back(n);
+        for (const auto& cn: n%filter) {
+            list.push_back(cn);
         }
         n = n.nextSibling();
     }
     return list;
 }
 
-
+template <typename Filter>
+std::list<QDomNode>
+operator%(const std::list<QDomNode>& nodes, const Filter& filter) {
+    std::list<QDomNode> list;
+    for (const auto& l: nodes) {
+        auto i = l%filter;
+        for (const auto& n: i) {
+            list.push_back(n);
+        }
+    }
+    return list;
+}
 
 #endif
