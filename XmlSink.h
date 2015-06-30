@@ -49,8 +49,7 @@ Base operator>(const XmlSink<Base,Tag>& sink, const Tag&) {
 }
 
 template <typename Sink>
-typename std::enable_if<Sink::is_xmlsink,Sink>::type
-operator<(const Sink& sink, const typename Sink::StringType& val) {
+Sink operator<(const Sink& sink, const typename Sink::StringType& val) {
     sink.writeCharacters(val);
     return sink;
 }
