@@ -1,7 +1,7 @@
 #ifndef XMLSINK_H
 #define XMLSINK_H
 
-template <typename Base = void, typename Tag = void>
+template <typename Base, typename Tag>
 class XmlSink {
 public:
     static constexpr bool is_xmlsink = true;
