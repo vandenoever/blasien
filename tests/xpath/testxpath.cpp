@@ -67,11 +67,12 @@ TestXPath::iterateWithTags() {
 
 void
 TestXPath::iterateWithOr() {
-    /*
     QDomDocument dom = getExampleDoc1();
-    for (auto node: dom/(body|head)) {
+    int count = 0;
+    for (auto node: dom/html/(body|head)) {
+        ++count;
     }
-    */
+    QCOMPARE(count, 2);
 }
 
 QTEST_APPLESS_MAIN(TestXPath)
