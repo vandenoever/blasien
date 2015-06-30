@@ -24,13 +24,13 @@ node_filter_matches(const QDomNode& n, const std::pair<A,B>& p) {
     return node_filter_matches(n, p.first) || node_filter_matches(n, p.second);
 }
 
-template <typename Tag>
+template <typename Filter>
 std::list<QDomNode>
-operator/(const QDomNode& node, const Tag& tag) {
+operator/(const QDomNode& node, const Filter& filter) {
     std::list<QDomNode> list;
     QDomNode n = node.firstChild();
     while (!n.isNull()) {
-        if (node_filter_matches(n, tag)) {
+        if (node_filter_matches(n, filter)) {
             list.push_back(n);
         }
         n = n.nextSibling();
@@ -51,6 +51,23 @@ operator/(const std::list<QDomNode>& nodes, const Tag& tag) {
     return list;
 }
 
+template <typename Filter>
+std::list<QDomNode>
+operator%(const QDomNode& node, const Filter& filter) {
+    std::list<QDomNode> list;
+    QDomNode n = node.firstChild();
+    while (!n.isNull()) {
+        if (node_filter_matches(n, filter)) {
+            list.push_back(n);
+        }
+        auto c = n%filter;
+        for (const auto& n: c) {
+            list.push_back(n);
+        }
+        n = n.nextSibling();
+    }
+    return list;
+}
 
 
 

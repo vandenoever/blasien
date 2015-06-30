@@ -10,6 +10,7 @@ private Q_SLOTS: // tests
     void iterateWithTag();
     void iterateWithTags();
     void iterateWithOr();
+    void iterateWithDeepTags();
 
 };
 
@@ -18,6 +19,8 @@ const QString htmlns = QStringLiteral("http://www.w3.org/1999/xhtml");
 const QString htmlTag = QStringLiteral("html");
 const QString headTag = QStringLiteral("head");
 const QString bodyTag = QStringLiteral("body");
+const QString divTag = QStringLiteral("div");
+const QString pTag = QStringLiteral("p");
 const QString titleTag = QStringLiteral("title");
 const QString idTag = QStringLiteral("id");
 const QString classTag = QStringLiteral("class");
@@ -25,6 +28,8 @@ const QString empty;
 XmlTag<&htmlns, &htmlTag, false, true> html;
 XmlTag<&htmlns, &headTag, false, true> head;
 XmlTag<&htmlns, &bodyTag, false, true> body;
+XmlTag<&htmlns, &divTag, false, true> div;
+XmlTag<&htmlns, &pTag, false, true> p;
 XmlTag<&htmlns, &titleTag, false, true> title;
 //XmlTag<&empty, &idTag, true, false> id;
 //XmlTag<&empty, &classTag, true, false> class_;
@@ -39,6 +44,17 @@ QDomDocument getExampleDoc1() {
         >title
       >head
       <body
+        <p
+          <"First paragraph"
+        >p
+        <div
+          <p
+            <"Second paragraph"
+          >p
+          <p
+            <"Third paragraph"
+          >p
+        >div
       >body
     >html;
     return dom;
@@ -73,6 +89,17 @@ TestXPath::iterateWithOr() {
         ++count;
     }
     QCOMPARE(count, 2);
+}
+
+void
+TestXPath::iterateWithDeepTags() {
+    QDomDocument dom = getExampleDoc1();
+    int count = 0;
+    for (auto node: dom%p) {
+        ++count;
+    }
+    QCOMPARE(count, 3);
+
 }
 
 QTEST_APPLESS_MAIN(TestXPath)
