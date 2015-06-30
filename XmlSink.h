@@ -5,6 +5,7 @@ template <typename Base, typename Tag>
 class XmlSink {
 public:
     static constexpr bool is_xmlsink = true;
+    using StringType = typename Base::StringType;
     const Base& base;
     inline XmlSink(const Base& b) :base(b) {}
     template <typename ChildTag>
@@ -47,15 +48,9 @@ Base operator>(const XmlSink<Base,Tag>& sink, const Tag&) {
     return sink.base;
 }
 
-template <typename Base, typename Tag>
-XmlSink<Base,Tag> operator<(const XmlSink<Base,Tag>& sink, const char* val) {
-    sink.writeCharacters(val);
-    return sink;
-}
-
 template <typename Sink>
 typename std::enable_if<Sink::is_xmlsink,Sink>::type
-operator<(const Sink& sink, const QString& val) {
+operator<(const Sink& sink, const typename Sink::StringType& val) {
     sink.writeCharacters(val);
     return sink;
 }

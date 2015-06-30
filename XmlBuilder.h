@@ -9,6 +9,7 @@
 class XmlBuilder {
 public:
     static constexpr bool is_xmlsink = true;
+    using StringType = QString;
     QDomDocument doc;
     QDomNode& node;
     explicit XmlBuilder(QDomNode& n) :node(n) {

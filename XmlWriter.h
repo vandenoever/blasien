@@ -8,6 +8,7 @@
 class XmlWriter {
 public:
     static constexpr bool is_xmlsink = true;
+    using StringType = QString;
     QXmlStreamWriter& writer;
     explicit XmlWriter(QXmlStreamWriter& w) :writer(w) {}
     template <typename Tag>
