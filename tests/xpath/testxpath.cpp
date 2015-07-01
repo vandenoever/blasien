@@ -16,6 +16,8 @@ private Q_SLOTS: // tests
     void iterateWithChildTag();
     void iterateWithMissingChildTag();
     void iterateWithChildTags();
+    void iterateWithAttributePresence();
+    void iterateWithAttributeNotPresence();
 };
 
 namespace {
@@ -35,13 +37,13 @@ XmlTag<&htmlns, &bodyTag, false, true> body;
 XmlTag<&htmlns, &divTag, false, true> div;
 XmlTag<&htmlns, &pTag, false, true> p;
 XmlTag<&htmlns, &titleTag, false, true> title;
-//XmlTag<&empty, &idTag, true, false> id;
+XmlTag<&empty, &idTag, true, false> id;
 //XmlTag<&empty, &classTag, true, false> class_;
 
 QDomDocument getExampleDoc1() {
     QDomDocument dom("test");
     XmlBuilder(dom)
-    <html
+    <html({id="html"})
       <head
         <title
           <"Hello World!"
@@ -145,6 +147,30 @@ TestXPath::iterateWithMissingChildTag() {
 }
 void
 TestXPath::iterateWithChildTags() {
+    QDomDocument dom = getExampleDoc1();
+    int count = 0;
+    for (auto node: dom/html[p|body]) {
+        ++count;
+    }
+    QCOMPARE(count, 1);
+}
+void
+TestXPath::iterateWithAttributePresence() {
+    QDomDocument dom = getExampleDoc1();
+    int count = 0;
+    for (auto node: dom/html[~id]) {
+        ++count;
+    }
+    QCOMPARE(count, 1);
+}
+void
+TestXPath::iterateWithAttributeNotPresence() {
+    QDomDocument dom = getExampleDoc1();
+    int count = 0;
+    for (auto node: dom/html[not(~id)]) {
+        ++count;
+    }
+    QCOMPARE(count, 0);
 }
 
 QTEST_APPLESS_MAIN(TestXPath)

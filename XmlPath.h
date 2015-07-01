@@ -6,6 +6,20 @@
 
 #include <QDomDocument>
 
+// TODO: use terminology NodeTest (e.g. NameTest, NodeType) and Predicate
+
+template <typename Predicate>
+struct NotPredicate {
+    const Predicate predicate;
+    NotPredicate(const Predicate& p) :predicate(p) {}
+};
+
+template <typename Tag>
+NotPredicate<AttributeName<Tag>>
+operator!(const AttributeName<Tag>& a) {
+    return NotPredicate<AttributeName<Tag>>(a);
+}
+
 template <typename Tag1, typename Tag2>
 typename std::enable_if<Tag1::is_tag && Tag2::is_tag,std::pair<Tag1,Tag2>>::type
 operator|(const Tag1& tag1, const Tag2& tag2) {
@@ -18,6 +32,35 @@ node_filter_matches(const QDomNode& n, const Tag& tag) {
     return n.nodeType() == QDomNode::ElementNode && tag.ns() == n.namespaceURI() && tag.name() == n.localName();
 }
 
+template <typename Tag>
+bool
+node_filter_matches(const QDomNode& n, const AttributeName<Tag>& a) {
+    return n.nodeType() == QDomNode::AttributeNode && a.tag.ns() == n.namespaceURI() && a.tag.name() == n.localName();
+}
+
+template <typename A, typename Predicate>
+bool
+node_filter_matches(const QDomNode& n, const NameTestWithPredicate<A,NotPredicate<Predicate>>& t) {
+    bool m = node_filter_matches(n, t.tag);
+    bool cm = true;
+    if (m) {
+        const auto atts = n.attributes();
+        const int l = atts.length();
+        int i = 0;
+        while (cm && i < l) {
+            auto a = atts.item(i);
+            cm = node_filter_matches(a, t.predicate.predicate);
+            ++i;
+        }
+        QDomNode c = n.firstChild();
+        while (cm && !c.isNull()) {
+            cm = node_filter_matches(c, t.predicate.predicate);
+            c = c.nextSibling();
+        }
+    }
+    return cm;
+}
+
 template <typename A, typename B>
 bool
 node_filter_matches(const QDomNode& n, const std::pair<A,B>& p) {
@@ -26,13 +69,21 @@ node_filter_matches(const QDomNode& n, const std::pair<A,B>& p) {
 
 template <typename A, typename B>
 bool
-node_filter_matches(const QDomNode& n, const XmlFilter<A,B>& f) {
-    bool m = node_filter_matches(n, f.filter);
+node_filter_matches(const QDomNode& n, const NameTestWithPredicate<A,B>& t) {
+    bool m = node_filter_matches(n, t.tag);
     bool cm = false;
     if (m) {
+        const auto atts = n.attributes();
+        const int l = atts.length();
+        int i = 0;
+        while (!cm && i < l) {
+            auto a = atts.item(i);
+            cm = node_filter_matches(a, t.predicate);
+            ++i;
+        }
         QDomNode c = n.firstChild();
         while (!cm && !c.isNull()) {
-            cm = node_filter_matches(c, f.subFilter);
+            cm = node_filter_matches(c, t.predicate);
             c = c.nextSibling();
         }
     }

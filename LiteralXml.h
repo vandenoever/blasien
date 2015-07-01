@@ -17,11 +17,18 @@ struct QName {
     ElementStart addAttributes(std::initializer_list<AttributeNode>) const;
 };
 
-template <typename Filter, typename SubFilter>
-struct XmlFilter {
-    const Filter filter;
-    const SubFilter subFilter;
-    XmlFilter(const Filter& filter_, const SubFilter& subFilter_) :filter(filter_), subFilter(subFilter_) {}
+// represents an xpath Step which consists of a NameTest qualified by a Predicate
+template <typename NameTestTag, typename Predicate>
+struct NameTestWithPredicate {
+    const NameTestTag tag;
+    const Predicate predicate;
+    NameTestWithPredicate(const NameTestTag& testTag, const Predicate& p) :tag(testTag), predicate(p) {}
+};
+
+template <typename Tag>
+struct AttributeName {
+    const Tag tag;
+    AttributeName(const Tag& t) :tag(t) {}
 };
 
 template <const QString* Ns, const QString* Name, bool isAttribute=true, bool isElement=true>
@@ -39,10 +46,13 @@ struct XmlTag {
     operator()(std::initializer_list<AttributeNode> atts) const {
         return ElementStart<Self>(qname, atts);
     }
-    template <typename T>
-    XmlFilter<Self,T>
-    operator[](const T& t) const {
-        return XmlFilter<Self,T>(*this, t);
+    template <typename Predicate>
+    NameTestWithPredicate<Self, Predicate>
+    operator[](const Predicate& p) const {
+        return NameTestWithPredicate<Self,Predicate>(*this, p);
+    }
+    AttributeName<Self> operator~() const {
+        return AttributeName<Self>(*this);
     }
     // set the attribute
     AttributeNode operator=(const QString& val) const;
