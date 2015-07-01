@@ -2,6 +2,8 @@
 #include <QTest>
 #include <XmlWriter.h>
 #include <LiteralXml.h>
+#include <QDebug>
+
 class TestSerializer : public QObject
 {
     Q_OBJECT
@@ -30,10 +32,60 @@ XmlTag<&htmlns, &headTag, false, true> head;
 XmlTag<&htmlns, &titleTag, false, true> title;
 XmlTag<&empty, &idTag, true, false> id;
 XmlTag<&empty, &classTag, true, false> class_;
+
+struct DivType {
+    constexpr DivType() {}
+};
+
+struct PType {
+    constexpr PType() {}
+};
+
+template <typename ElementType>
+constexpr std::tuple<> getAllowedChildElements(const ElementType&) {
+    return std::tuple<>();
+}
+
+constexpr std::tuple<DivType, PType> getAllowedChildElements(const DivType&) {
+    return std::tuple<DivType, PType>();
+}
+constexpr std::tuple<PType> getAllowedChildElements(const PType&) {
+    return std::tuple<PType>();
+}
+
+
+template <typename T, typename Tuple>
+struct tuple_contains_type;
+
+template <typename T>
+struct tuple_contains_type<T, std::tuple<>> : std::false_type {};
+
+template <typename T, typename U, typename... Ts>
+struct tuple_contains_type<T, std::tuple<U, Ts...>> : tuple_contains_type<T, std::tuple<Ts...>> {};
+
+template <typename T, typename... Ts>
+struct tuple_contains_type<T, std::tuple<T, Ts...>> : std::true_type {};
+
+template <typename ParentElementType, typename ChildElementType>
+constexpr bool
+isChildAllowed() {
+    using Tuple = decltype(getAllowedChildElements(ParentElementType()));
+    return tuple_contains_type<ChildElementType,Tuple>();
+}
+
+void test() {
+    auto a = getAllowedChildElements(DivType());
+    using T = decltype(a);
+    qDebug() << std::tuple_size<T>::value;
+    qDebug() << isChildAllowed<DivType, PType>();
+    qDebug() << isChildAllowed<PType, DivType>();
+}
+
 }
 
 void
 TestSerializer::writeElement() {
+    test();
     QString r;
     QXmlStreamWriter stream(&r);
     XmlWriter(stream)
