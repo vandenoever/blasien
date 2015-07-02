@@ -22,8 +22,8 @@ namespace {
 const QString idTag = QStringLiteral("id");
 const QString classTag = QStringLiteral("class");
 const QString empty;
-XmlTag<&empty, &idTag, true, false> id;
-XmlTag<&empty, &classTag, true, false> class_;
+XmlTag<&empty, &idTag> id;
+XmlTag<&empty, &classTag> class_;
 }
 
 using namespace xhtml11;

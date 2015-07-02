@@ -26,7 +26,7 @@ using namespace xhtml11;
 namespace {
 const QString idTag = QStringLiteral("id");
 const QString empty;
-XmlTag<&empty, &idTag, true, false> id;
+XmlTag<&empty, &idTag> id;
 
 QDomDocument getExampleDoc1() {
     QDomDocument dom("test");

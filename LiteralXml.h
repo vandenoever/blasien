@@ -31,9 +31,9 @@ struct AttributeName {
     AttributeName(const Tag& t) :tag(t) {}
 };
 
-template <const QString* Ns, const QString* Name, bool isAttribute=true, bool isElement=true>
+template <const QString* Ns, const QString* Name>
 struct XmlTag {
-    using Self = XmlTag<Ns, Name, isAttribute, isElement>;
+    using Self = XmlTag<Ns, Name>;
     static constexpr bool is_tag = true;
     static const QName qname;
     static const QString& ns() {
@@ -58,8 +58,8 @@ struct XmlTag {
     AttributeNode operator=(const QString& val) const;
 };
 
-template <const QString* Ns, const QString* Name, bool isAttribute, bool isElement>
-const QName XmlTag<Ns, Name, isAttribute,isElement>::qname(*Ns, *Name);
+template <const QString* Ns, const QString* Name>
+const QName XmlTag<Ns, Name>::qname(*Ns, *Name);
 
 struct AttributeNode {
     QName qname;
@@ -72,9 +72,9 @@ struct AttributeNode {
     }
 };
 
-template <const QString* Ns, const QString* Name, bool isAttribute, bool isElement>
+template <const QString* Ns, const QString* Name>
 AttributeNode
-XmlTag<Ns,Name,isAttribute,isElement>::operator=(const QString& val) const {
+XmlTag<Ns,Name>::operator=(const QString& val) const {
     return AttributeNode(qname, val);
 }
 

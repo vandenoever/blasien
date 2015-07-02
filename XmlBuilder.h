@@ -4,7 +4,6 @@
 #include <LiteralXml.h>
 #include <XmlSink.h>
 #include <QDomDocument>
-#include <QDebug>
 
 template <typename NodeType_>
 class XmlBuilder {
