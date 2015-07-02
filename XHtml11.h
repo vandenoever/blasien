@@ -14,12 +14,12 @@ const QString idTag = QStringLiteral("id");
 const QString classTag = QStringLiteral("class");
 const QString empty;
 
-using HtmlTag = XmlTag<&htmlns, &htmlTag>;
-using HeadTag = XmlTag<&htmlns, &headTag>;
-using BodyTag = XmlTag<&htmlns, &bodyTag>;
-using TitleTag = XmlTag<&htmlns, &titleTag>;
-using DivTag = XmlTag<&htmlns, &divTag>;
-using PTag = XmlTag<&htmlns, &pTag>;
+using HtmlTag = XmlTag<QString,&htmlns, &htmlTag>;
+using HeadTag = XmlTag<QString,&htmlns, &headTag>;
+using BodyTag = XmlTag<QString,&htmlns, &bodyTag>;
+using TitleTag = XmlTag<QString,&htmlns, &titleTag>;
+using DivTag = XmlTag<QString,&htmlns, &divTag>;
+using PTag = XmlTag<QString,&htmlns, &pTag>;
 
 static HtmlTag html;
 static HeadTag head;

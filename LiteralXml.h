@@ -1,20 +1,23 @@
 #ifndef LITERALXML_H
 #define LITERALXML_H
 
+template <typename String>
 struct AttributeNode;
 template <typename Tag>
 struct ElementStart;
 
 
+template <typename String_>
 struct QName {
+    using String = String_;
     static const bool is_tag = true;
-    QString ns_;
-    QString name_;
-    QName(const QString& ns, const QString& name) :ns_(ns), name_(name) {}
-    const QString& ns() const { return ns_; }
-    const QString& name() const { return name_; }
+    String ns_;
+    String name_;
+    QName(const String& ns, const String& name) :ns_(ns), name_(name) {}
+    const String& ns() const { return ns_; }
+    const String& name() const { return name_; }
     template <typename ElementStart>
-    ElementStart addAttributes(std::initializer_list<AttributeNode>) const;
+    ElementStart addAttributes(std::initializer_list<AttributeNode<String>>) const;
 };
 
 // represents an xpath Step which consists of a NameTest qualified by a Predicate
@@ -31,19 +34,20 @@ struct AttributeName {
     AttributeName(const Tag& t) :tag(t) {}
 };
 
-template <const QString* Ns, const QString* Name>
+template <typename String_, const String_* Ns, const String_* Name>
 struct XmlTag {
-    using Self = XmlTag<Ns, Name>;
+    using String = String_;
+    using Self = XmlTag<String,Ns, Name>;
     static constexpr bool is_tag = true;
-    static const QName qname;
-    static const QString& ns() {
+    static const QName<String> qname;
+    static const String& ns() {
         return qname.ns();
     }
-    static const QString& name() {
+    static const String& name() {
         return qname.name();
     }
     ElementStart<Self>
-    operator()(std::initializer_list<AttributeNode> atts) const {
+    operator()(std::initializer_list<AttributeNode<String>> atts) const {
         return ElementStart<Self>(qname, atts);
     }
     template <typename Predicate>
@@ -55,16 +59,17 @@ struct XmlTag {
         return AttributeName<Self>(*this);
     }
     // set the attribute
-    AttributeNode operator=(const QString& val) const;
+    AttributeNode<String> operator=(const String& val) const;
 };
 
-template <const QString* Ns, const QString* Name>
-const QName XmlTag<Ns, Name>::qname(*Ns, *Name);
+template <typename String, const String* Ns, const String* Name>
+const QName<String> XmlTag<String, Ns, Name>::qname(*Ns, *Name);
 
+template <typename String>
 struct AttributeNode {
-    QName qname;
-    QString value;
-    AttributeNode(const QName& q, const QString& v) :qname(q), value(v) {}
+    QName<String> qname;
+    String value;
+    AttributeNode(const QName<String>& q, const String& v) :qname(q), value(v) {}
     const AttributeNode& operator=(const AttributeNode& a) {
         qname = a.qname;
         value = a.value;
@@ -72,22 +77,24 @@ struct AttributeNode {
     }
 };
 
-template <const QString* Ns, const QString* Name>
-AttributeNode
-XmlTag<Ns,Name>::operator=(const QString& val) const {
-    return AttributeNode(qname, val);
+template <typename String, const String* Ns, const String* Name>
+AttributeNode<String>
+XmlTag<String,Ns,Name>::operator=(const String& val) const {
+    return AttributeNode<String>(qname, val);
 }
 
+template <typename String>
 template <typename ElementStart>
-ElementStart QName::addAttributes(std::initializer_list<AttributeNode>) const {
-    return ElementStart(*this, QList<AttributeNode>());
+ElementStart QName<String>::addAttributes(std::initializer_list<AttributeNode<String>>) const {
+    return ElementStart(*this, QList<AttributeNode<String>>());
 }
 
 template <typename Tag>
 struct ElementStart {
-    const QName qname;
-    const QList<AttributeNode> atts;
-    ElementStart(const QName& q, const QList<AttributeNode>& l) :qname(q), atts(l) {}
+    using String = typename Tag::String;
+    const QName<String> qname;
+    const QList<AttributeNode<String>> atts;
+    ElementStart(const QName<String>& q, const QList<AttributeNode<String>>& l) :qname(q), atts(l) {}
 };
 
 #endif // LITERALXML_H

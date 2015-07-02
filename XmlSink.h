@@ -60,7 +60,7 @@ template <typename Sink, typename Tag>
 typename type_from_tag<Sink,Tag>::type
 operator<(const Sink& sink, const ElementStart<Tag>& e) {
     sink.startElement(e.qname);
-    for (const AttributeNode& a: e.atts) {
+    for (const AttributeNode<typename Tag::String>& a: e.atts) {
         sink.writeAttribute(a.qname, a.value);
     }
     return typename type_from_tag<Sink,Tag>::type(sink);
