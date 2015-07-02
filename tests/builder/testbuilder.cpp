@@ -2,6 +2,7 @@
 #include <QTest>
 #include <XmlBuilder.h>
 #include <LiteralXml.h>
+#include <XHtml11.h>
 
 class TestBuilder : public QObject
 {
@@ -18,25 +19,19 @@ private Q_SLOTS: // tests
 };
 
 namespace {
-const QString htmlns = QStringLiteral("http://www.w3.org/1999/xhtml");
-const QString htmlTag = QStringLiteral("html");
-const QString headTag = QStringLiteral("head");
-const QString titleTag = QStringLiteral("title");
 const QString idTag = QStringLiteral("id");
 const QString classTag = QStringLiteral("class");
 const QString empty;
-XmlTag<&htmlns, &htmlTag, false, true> html;
-XmlTag<&htmlns, &headTag, false, true> head;
-XmlTag<&htmlns, &titleTag, false, true> title;
 XmlTag<&empty, &idTag, true, false> id;
 XmlTag<&empty, &classTag, true, false> class_;
 }
 
+using namespace xhtml11;
 
 void
 TestBuilder::buildElement() {
     QDomDocument dom("test");
-    XmlBuilder(dom)
+    XmlBuilder<XHtmlDocument>(dom)
     <html>html;
     QCOMPARE(dom.childNodes().length(), 1);
     QDomNode n = dom.firstChild();
@@ -46,7 +41,7 @@ TestBuilder::buildElement() {
 void
 TestBuilder::buildElements() {
     QDomDocument dom("test");
-    XmlBuilder(dom)
+    XmlBuilder<XHtmlDocument>(dom)
     <html
       <head>head
     >html;
@@ -62,7 +57,7 @@ TestBuilder::buildElements() {
 void
 TestBuilder::buildCharacters() {
     QDomDocument dom("test");
-    XmlBuilder(dom)
+    XmlBuilder<XHtmlDocument>(dom)
     <html
       <head
         <title
@@ -87,7 +82,7 @@ TestBuilder::buildCharacters() {
 void
 TestBuilder::buildAttribute() {
     QDomDocument dom("test");
-    XmlBuilder(dom)
+    XmlBuilder<XHtmlDocument>(dom)
     <html
       <head({id="v1.1"})
       >head
@@ -109,7 +104,7 @@ TestBuilder::buildAttribute() {
 void
 TestBuilder::buildAttributes() {
     QDomDocument dom("test");
-    XmlBuilder(dom)
+    XmlBuilder<XHtmlDocument>(dom)
     <html
       <head({id="v1.1",class_="main"})
       >head
@@ -137,7 +132,7 @@ makeHead(const XmlSink<Base,Tag>& w) {
 void
 TestBuilder::buildWithFunction() {
     QDomDocument dom("test");
-    XmlBuilder(dom)
+    XmlBuilder<XHtmlDocument>(dom)
     <html
       <makeHead
     >html;
@@ -163,7 +158,7 @@ void
 TestBuilder::buildWithFunctor() {
     Functor f("HELLO");
     QDomDocument dom("test");
-    XmlBuilder(dom)
+    XmlBuilder<XHtmlDocument>(dom)
     <html
       <f
     >html;
@@ -195,7 +190,7 @@ void
 TestBuilder::buildListWithFunctor() {
     ListFunctor f({"A","B"});
     QDomDocument dom("test");
-    XmlBuilder(dom)
+    XmlBuilder<XHtmlDocument>(dom)
     <html
       <f
     >html;

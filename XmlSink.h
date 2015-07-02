@@ -1,10 +1,14 @@
 #ifndef XMLSINK_H
 #define XMLSINK_H
 
-template <typename Base, typename Tag>
+template <typename NodeType>
+struct allowed_child_types;
+
+template <typename Base, typename NodeType_>
 class XmlSink {
 public:
     static constexpr bool is_xmlsink = true;
+    using NodeType = NodeType_;
     using StringType = typename Base::StringType;
     const Base& base;
     inline XmlSink(const Base& b) :base(b) {}
@@ -25,25 +29,45 @@ public:
     }
 };
 
+/* helper structs */
+template <typename Tag, typename Types>
+struct type_with_tag;
+
+template <typename Type, typename... Types>
+struct type_with_tag<typename Type::Tag, std::tuple<Type, Types...>> {
+    using type = Type;
+};
+
+template <typename Tag, typename Type, typename... Types>
+struct type_with_tag<Tag, std::tuple<Type, Types...>> {
+    using type = typename type_with_tag<Tag, std::tuple<Types...>>::type;
+};
+
 template <typename Sink, typename Tag>
-typename std::enable_if<Sink::is_xmlsink && Tag::is_tag,XmlSink<Sink,Tag>>::type
+struct type_from_tag {
+    using types = typename allowed_child_types<typename Sink::NodeType>::types;
+    using type = XmlSink<Sink,typename type_with_tag<Tag,types>::type>;
+};
+
+template <typename Sink, typename Tag>
+typename std::enable_if<Sink::is_xmlsink && Tag::is_tag,typename type_from_tag<Sink,Tag>::type>::type
 operator<(const Sink& sink, const Tag& tag) {
     sink.startElement(tag);
-    return XmlSink<Sink, Tag>(sink);
+    return typename type_from_tag<Sink,Tag>::type(sink);
 }
 
 template <typename Sink, typename Tag>
-typename std::enable_if<Sink::is_xmlsink && Tag::is_tag,XmlSink<Sink, Tag>>::type
+typename type_from_tag<Sink,Tag>::type
 operator<(const Sink& sink, const ElementStart<Tag>& e) {
     sink.startElement(e.qname);
     for (const AttributeNode& a: e.atts) {
         sink.writeAttribute(a.qname, a.value);
     }
-    return XmlSink<Sink, Tag>(sink);
+    return typename type_from_tag<Sink,Tag>::type(sink);
 }
 
-template <typename Base, typename Tag>
-Base operator>(const XmlSink<Base,Tag>& sink, const Tag&) {
+template <typename Base, typename Type>
+Base operator>(const XmlSink<Base,Type>& sink, const typename Type::Tag&) {
     sink.endElement();
     return sink.base;
 }
@@ -53,10 +77,12 @@ Sink operator<(const Sink& sink, const typename Sink::StringType& val) {
     sink.writeCharacters(val);
     return sink;
 }
+
 template<typename F, typename Sink>
 auto operator<(const Sink& sink, F f) -> decltype(f(sink)) {
     return f(sink);
 }
+
 template<typename Sink>
 Sink operator<(const Sink& sink, Sink (*f)(const Sink&)) {
     return f(sink);

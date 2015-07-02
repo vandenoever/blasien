@@ -6,9 +6,11 @@
 #include <QDomDocument>
 #include <QDebug>
 
+template <typename NodeType_>
 class XmlBuilder {
 public:
     static constexpr bool is_xmlsink = true;
+    using NodeType = NodeType_;
     using StringType = QString;
     QDomDocument doc;
     QDomNode& node;

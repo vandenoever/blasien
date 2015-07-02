@@ -2,6 +2,7 @@
 #include <QTest>
 #include <XmlWriter.h>
 #include <LiteralXml.h>
+#include <XHtml11.h>
 #include <QDebug>
 
 class TestSerializer : public QObject
@@ -19,76 +20,20 @@ private Q_SLOTS: // tests
 };
 
 namespace {
-
-const QString htmlns = QStringLiteral("http://www.w3.org/1999/xhtml");
-const QString htmlTag = QStringLiteral("html");
-const QString headTag = QStringLiteral("head");
-const QString titleTag = QStringLiteral("title");
 const QString idTag = QStringLiteral("id");
 const QString classTag = QStringLiteral("class");
 const QString empty;
-XmlTag<&htmlns, &htmlTag, false, true> html;
-XmlTag<&htmlns, &headTag, false, true> head;
-XmlTag<&htmlns, &titleTag, false, true> title;
 XmlTag<&empty, &idTag, true, false> id;
 XmlTag<&empty, &classTag, true, false> class_;
-
-struct DivType {
-    constexpr DivType() {}
-};
-
-struct PType {
-    constexpr PType() {}
-};
-
-template <typename ElementType>
-constexpr std::tuple<> getAllowedChildElements(const ElementType&) {
-    return std::tuple<>();
 }
 
-constexpr std::tuple<DivType, PType> getAllowedChildElements(const DivType&) {
-    return std::tuple<DivType, PType>();
-}
-constexpr std::tuple<PType> getAllowedChildElements(const PType&) {
-    return std::tuple<PType>();
-}
-
-
-template <typename T, typename Tuple>
-struct tuple_contains_type;
-
-template <typename T>
-struct tuple_contains_type<T, std::tuple<>> : std::false_type {};
-
-template <typename T, typename U, typename... Ts>
-struct tuple_contains_type<T, std::tuple<U, Ts...>> : tuple_contains_type<T, std::tuple<Ts...>> {};
-
-template <typename T, typename... Ts>
-struct tuple_contains_type<T, std::tuple<T, Ts...>> : std::true_type {};
-
-template <typename ParentElementType, typename ChildElementType>
-constexpr bool
-isChildAllowed() {
-    using Tuple = decltype(getAllowedChildElements(ParentElementType()));
-    return tuple_contains_type<ChildElementType,Tuple>();
-}
-
-void test() {
-    auto a = getAllowedChildElements(DivType());
-    using T = decltype(a);
-    qDebug() << std::tuple_size<T>::value;
-    qDebug() << isChildAllowed<DivType, PType>();
-    qDebug() << isChildAllowed<PType, DivType>();
-}
-
-}
+using namespace xhtml11;
 
 void
 TestSerializer::writeElement() {
-    test();
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter(stream)
+    XmlWriter<XHtmlDocument>(stream)
     <html>html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"/>"));
 }
@@ -96,7 +41,7 @@ void
 TestSerializer::writeElements() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter(stream)
+    XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <head>head
     >html;
@@ -106,7 +51,7 @@ void
 TestSerializer::writeCharacters() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter(stream)
+    XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <head
         <title
@@ -120,7 +65,7 @@ void
 TestSerializer::writeAttribute() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter(stream)
+    XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <head({id="v1.1"})
       >head
@@ -131,7 +76,7 @@ void
 TestSerializer::writeAttributes() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter(stream)
+    XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <head({id="v1.1",class_="main"})
       >head
@@ -148,7 +93,7 @@ void
 TestSerializer::writeWithFunction() {
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter(stream)
+    XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <makeHead
     >html;
@@ -168,7 +113,7 @@ TestSerializer::writeWithFunctor() {
     Functor f("HELLO");
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter(stream)
+    XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <f
     >html;
@@ -191,7 +136,7 @@ TestSerializer::writeListWithFunctor() {
     ListFunctor f({"A","B"});
     QString r;
     QXmlStreamWriter stream(&r);
-    XmlWriter(stream)
+    XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <f
     >html;

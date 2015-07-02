@@ -5,9 +5,11 @@
 #include <LiteralXml.h>
 #include <XmlSink.h>
 
+template <typename NodeType_>
 class XmlWriter {
 public:
     static constexpr bool is_xmlsink = true;
+    using NodeType = NodeType_;
     using StringType = QString;
     QXmlStreamWriter& writer;
     explicit XmlWriter(QXmlStreamWriter& w) :writer(w) {}
