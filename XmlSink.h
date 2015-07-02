@@ -1,8 +1,21 @@
 #ifndef XMLSINK_H
 #define XMLSINK_H
 
+struct TextType;
+struct AnyType;
+
 template <typename NodeType>
 struct allowed_child_types;
+
+template <>
+struct allowed_child_types<AnyType> {
+    using types = std::tuple<AnyType,TextType>;
+};
+
+template <>
+struct allowed_child_types<TextType> {
+    using types = std::tuple<>;
+};
 
 template <typename Base, typename NodeType_>
 class XmlSink {
@@ -72,8 +85,43 @@ Base operator>(const XmlSink<Base,Type>& sink, const typename Type::Tag&) {
     return sink.base;
 }
 
+template <typename T, typename Types>
+struct type_in_types;
+
+template <typename T>
+struct type_in_types<T, std::tuple<>> {
+    static const bool value = false;
+};
+
+template <typename T, typename Type, typename... Types>
+struct type_in_types<T, std::tuple<Type, Types...>> {
+    static const bool value = type_in_types<T, std::tuple<Types...>>::value;
+};
+
+template <typename T, typename... Types>
+struct type_in_types<T, std::tuple<T, Types...>> {
+    static const bool value = true;
+};
+
+template <typename Sink, bool isSink>
+struct sink_allows_text;
+
 template <typename Sink>
-Sink operator<(const Sink& sink, const typename Sink::StringType& val) {
+struct sink_allows_text<Sink, false>
+{
+    static const bool value = false;
+};
+
+template <typename Sink>
+struct sink_allows_text<Sink, true> {
+    using types = typename allowed_child_types<typename Sink::NodeType>::types;
+    static const bool value = type_in_types<TextType, types>::value;
+};
+
+template <typename Sink>
+typename std::enable_if<sink_allows_text<Sink,Sink::is_xmlsink>::value, Sink>::type
+operator<(const Sink& sink, const typename Sink::StringType& val) {
+    static_assert(!std::is_same<Sink,QString>(),"ohoh");
     sink.writeCharacters(val);
     return sink;
 }

@@ -68,6 +68,11 @@ struct allowed_child_types<xhtml11::HeadType> {
 };
 
 template <>
+struct allowed_child_types<xhtml11::TitleType> {
+    using types = std::tuple<TextType>;
+};
+
+template <>
 struct allowed_child_types<xhtml11::BodyType> {
     using types = std::tuple<xhtml11::DivType,xhtml11::PType>;
 };
@@ -79,7 +84,7 @@ struct allowed_child_types<xhtml11::DivType> {
 
 template <>
 struct allowed_child_types<xhtml11::PType> {
-    using types = std::tuple<>;
+    using types = std::tuple<TextType>;
 };
 
 #endif

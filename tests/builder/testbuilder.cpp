@@ -151,7 +151,7 @@ public:
     Functor(const QString& text_) :text(text_) {}
     template <typename Base, typename Tag>
     XmlSink<Base,Tag> operator()(XmlSink<Base,Tag> w) {
-        return w <head<text>head;
+        return w <head<title<text>title>head;
     }
 };
 void
@@ -171,6 +171,10 @@ TestBuilder::buildWithFunctor() {
     QCOMPARE(n.namespaceURI(), head.ns());
     QCOMPARE(n.localName(), head.name());
     QCOMPARE(n.childNodes().length(), 1);
+    n = n.firstChild();
+    QCOMPARE(n.namespaceURI(), title.ns());
+    QCOMPARE(n.localName(), title.name());
+    QCOMPARE(n.childNodes().length(), 1);
     QDomNode t = n.firstChild();
     QCOMPARE(t.nodeValue(), QString("HELLO"));
 }
@@ -181,7 +185,7 @@ public:
     template <typename Base, typename Tag>
     XmlSink<Base,Tag> operator()(const XmlSink<Base,Tag>& w) {
         for (const QString& t: texts) {
-            w <head <t >head;
+            w <head<title<t>title>head;
         }
         return w;
     }
@@ -204,12 +208,20 @@ TestBuilder::buildListWithFunctor() {
     QCOMPARE(n.localName(), head.name());
     QCOMPARE(n.childNodes().length(), 1);
     QDomNode t = n.firstChild();
+    QCOMPARE(t.namespaceURI(), title.ns());
+    QCOMPARE(t.localName(), title.name());
+    QCOMPARE(t.childNodes().length(), 1);
+    t = t.firstChild();
     QCOMPARE(t.nodeValue(), QString("A"));
     n = n.nextSibling();
     QCOMPARE(n.namespaceURI(), head.ns());
     QCOMPARE(n.localName(), head.name());
     QCOMPARE(n.childNodes().length(), 1);
     t = n.firstChild();
+    QCOMPARE(t.namespaceURI(), title.ns());
+    QCOMPARE(t.localName(), title.name());
+    QCOMPARE(t.childNodes().length(), 1);
+    t = t.firstChild();
     QCOMPARE(t.nodeValue(), QString("B"));
 }
 

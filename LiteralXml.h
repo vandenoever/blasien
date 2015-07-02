@@ -6,7 +6,6 @@ struct AttributeNode;
 template <typename Tag>
 struct ElementStart;
 
-
 template <typename String_>
 struct QName {
     using String = String_;

@@ -98,13 +98,14 @@ TestSerializer::writeWithFunction() {
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head/></n1:html>"));
 }
+
 class Functor {
 public:
     const QString text;
     Functor(const QString& text_) :text(text_) {}
     template <typename Base, typename Tag>
     XmlSink<Base,Tag> operator()(const XmlSink<Base,Tag>& w) {
-        return w <head<text>head;
+        return w <head<title<text>title>head;
     }
 };
 void
@@ -116,7 +117,7 @@ TestSerializer::writeWithFunctor() {
     <html
       <f
     >html;
-    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head>HELLO</n1:head></n1:html>"));
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head><n1:title>HELLO</n1:title></n1:head></n1:html>"));
 }
 class ListFunctor {
 public:
@@ -125,7 +126,7 @@ public:
     template <typename Base, typename Tag>
     XmlSink<Base,Tag> operator()(XmlSink<Base,Tag> w) {
         for (const QString& t: texts) {
-            w <head <t >head;
+            w <head<title<t>title>head;
         }
         return w;
     }
@@ -139,7 +140,7 @@ TestSerializer::writeListWithFunctor() {
     <html
       <f
     >html;
-    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head>A</n1:head><n1:head>B</n1:head></n1:html>"));
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head><n1:title>A</n1:title></n1:head><n1:head><n1:title>B</n1:title></n1:head></n1:html>"));
 }
 
 QTEST_APPLESS_MAIN(TestSerializer)
