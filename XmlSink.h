@@ -59,7 +59,7 @@ operator<(const Sink& sink, const Tag& tag) {
 template <typename Sink, typename Tag>
 typename type_from_tag<Sink,Tag>::type
 operator<(const Sink& sink, const ElementStart<Tag>& e) {
-    sink.startElement(e.qname);
+    sink.startElement(Tag::qname);
     for (const AttributeNode<typename Tag::String>& a: e.atts) {
         sink.writeAttribute(a.qname, a.value);
     }

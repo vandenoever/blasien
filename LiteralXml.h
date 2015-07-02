@@ -48,7 +48,7 @@ struct XmlTag {
     }
     ElementStart<Self>
     operator()(std::initializer_list<AttributeNode<String>> atts) const {
-        return ElementStart<Self>(qname, atts);
+        return ElementStart<Self>(atts);
     }
     template <typename Predicate>
     NameTestWithPredicate<Self, Predicate>
@@ -89,12 +89,12 @@ ElementStart QName<String>::addAttributes(std::initializer_list<AttributeNode<St
     return ElementStart(*this, QList<AttributeNode<String>>());
 }
 
-template <typename Tag>
+template <typename Tag_>
 struct ElementStart {
+    using Tag = Tag_;
     using String = typename Tag::String;
-    const QName<String> qname;
     const QList<AttributeNode<String>> atts;
-    ElementStart(const QName<String>& q, const QList<AttributeNode<String>>& l) :qname(q), atts(l) {}
+    ElementStart(const QList<AttributeNode<String>>& l) :atts(l) {}
 };
 
 #endif // LITERALXML_H
