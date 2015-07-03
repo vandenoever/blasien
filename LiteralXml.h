@@ -3,7 +3,7 @@
 
 template <typename String>
 struct AttributeNode;
-template <typename Tag>
+template <typename Tag, typename... Atts>
 struct ElementStart;
 
 template <typename String_>
@@ -15,8 +15,6 @@ struct QName {
     QName(const String& ns, const String& name) :ns_(ns), name_(name) {}
     const String& ns() const { return ns_; }
     const String& name() const { return name_; }
-    template <typename ElementStart>
-    ElementStart addAttributes(std::initializer_list<AttributeNode<String>>) const;
 };
 
 // represents an xpath Step which consists of a NameTest qualified by a Predicate
@@ -45,9 +43,10 @@ struct XmlTag {
     static const String& name() {
         return qname.name();
     }
-    ElementStart<Self>
-    operator()(std::initializer_list<AttributeNode<String>> atts) const {
-        return ElementStart<Self>(atts);
+    template <typename... Atts>
+    ElementStart<Self, Atts...>
+    operator()(Atts... atts) const {
+        return ElementStart<Self,Atts...>(atts...);
     }
     template <typename Predicate>
     NameTestWithPredicate<Self, Predicate>
@@ -82,18 +81,11 @@ XmlTag<String,Ns,Name>::operator=(const String& val) const {
     return AttributeNode<String>(qname, val);
 }
 
-template <typename String>
-template <typename ElementStart>
-ElementStart QName<String>::addAttributes(std::initializer_list<AttributeNode<String>>) const {
-    return ElementStart(*this, QList<AttributeNode<String>>());
-}
-
-template <typename Tag_>
+template <typename Tag_, typename... Atts>
 struct ElementStart {
     using Tag = Tag_;
-    using String = typename Tag::String;
-    const QList<AttributeNode<String>> atts;
-    ElementStart(const QList<AttributeNode<String>>& l) :atts(l) {}
+    const std::tuple<Atts...> atts;
+    ElementStart(Atts... atts_) :atts(atts_...) {}
 };
 
 #endif // LITERALXML_H

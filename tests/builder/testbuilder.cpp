@@ -84,7 +84,7 @@ TestBuilder::buildAttribute() {
     QDomDocument dom("test");
     XmlBuilder<XHtmlDocument>(dom)
     <html
-      <head({id="v1.1"})
+      <head(id="v1.1")
       >head
     >html;
     QCOMPARE(dom.childNodes().length(), 1);
@@ -106,7 +106,7 @@ TestBuilder::buildAttributes() {
     QDomDocument dom("test");
     XmlBuilder<XHtmlDocument>(dom)
     <html
-      <head({id="v1.1",class_="main"})
+      <head(id="v1.1",class_="main")
       >head
     >html;
     QCOMPARE(dom.childNodes().length(), 1);

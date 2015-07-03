@@ -69,13 +69,24 @@ operator<(const Sink& sink, const Tag& tag) {
     return typename type_from_tag<Sink,Tag>::type(sink);
 }
 
-template <typename Sink, typename Tag>
-typename type_from_tag<Sink,Tag>::type
-operator<(const Sink& sink, const ElementStart<Tag>& e) {
-    sink.startElement(Tag::qname);
-    for (const AttributeNode<typename Tag::String>& a: e.atts) {
-        sink.writeAttribute(a.qname, a.value);
+template <size_t N>
+struct write_attributes {
+    template<typename Sink, typename... T>
+    typename std::enable_if<N!=sizeof...(T),void>::type
+    write(const Sink& sink, const std::tuple<T...>& t) const {
+        sink.writeAttribute(std::get<N>(t).qname, std::get<N>(t).value);
+        write_attributes<N+1>().write(sink, t);
     }
+    template<typename Sink, typename... T>
+    typename std::enable_if<N==sizeof...(T),void>::type
+    write(const Sink&, const std::tuple<T...>&) const {}
+};
+
+template <typename Sink, typename Tag, typename... Atts>
+typename type_from_tag<Sink,Tag>::type
+operator<(const Sink& sink, const ElementStart<Tag, Atts...>& e) {
+    sink.startElement(Tag::qname);
+    write_attributes<0>().write(sink, e.atts);
     return typename type_from_tag<Sink,Tag>::type(sink);
 }
 
@@ -126,8 +137,9 @@ operator<(const Sink& sink, const typename Sink::StringType& val) {
     return sink;
 }
 
-template<typename F, typename Sink>
-auto operator<(const Sink& sink, F f) -> decltype(f(sink)) {
+template<typename F, typename Sink, typename R = typename std::result_of<F(Sink)>::type>
+typename std::enable_if<std::is_same<R,Sink>::value,Sink>::type
+operator<(const Sink& sink, F f) {
     return f(sink);
 }
 

@@ -66,7 +66,7 @@ TestSerializer::writeAttribute() {
     QXmlStreamWriter stream(&r);
     XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
-      <head({id="v1.1"})
+      <head(id="v1.1")
       >head
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head id=\"v1.1\"/></n1:html>"));
@@ -77,7 +77,7 @@ TestSerializer::writeAttributes() {
     QXmlStreamWriter stream(&r);
     XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
-      <head({id="v1.1",class_="main"})
+      <head(id="v1.1",class_="main")
       >head
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head id=\"v1.1\" class=\"main\"/></n1:html>"));

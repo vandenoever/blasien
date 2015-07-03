@@ -31,7 +31,7 @@ XmlTag<QString,&empty, &idTag> id;
 QDomDocument getExampleDoc1() {
     QDomDocument dom("test");
     XmlBuilder<XHtmlDocument>(dom)
-    <html({id="html"})
+    <html(id="html")
       <head
         <title
           <"Hello World!"
