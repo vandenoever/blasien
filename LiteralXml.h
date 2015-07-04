@@ -1,8 +1,6 @@
 #ifndef LITERALXML_H
 #define LITERALXML_H
 
-template <typename String>
-struct AttributeNode;
 template <typename Tag, typename... Atts>
 struct ElementStart;
 
@@ -31,6 +29,14 @@ struct AttributeName {
     AttributeName(const Tag& t) :tag(t) {}
 };
 
+template <typename XmlTag_>
+struct AttributeNode {
+    using XmlTag = XmlTag_;
+    using String = typename XmlTag::String;
+    String value;
+    AttributeNode(const String& v) :value(v) {}
+};
+
 template <typename String_, const String_* Ns, const String_* Name>
 struct XmlTag {
     using String = String_;
@@ -57,25 +63,13 @@ struct XmlTag {
         return AttributeName<Self>(*this);
     }
     // set the attribute
-    AttributeNode<Self> operator=(const String& val) const;
+    AttributeNode<Self> operator=(const String& val) const {
+        return AttributeNode<Self>(val);
+    }
 };
 
 template <typename String, const String* Ns, const String* Name>
 const QName<String> XmlTag<String, Ns, Name>::qname(*Ns, *Name);
-
-template <typename XmlTag_>
-struct AttributeNode {
-    using XmlTag = XmlTag_;
-    using String = typename XmlTag::String;
-    String value;
-    AttributeNode(const String& v) :value(v) {}
-};
-
-template <typename String, const String* Ns, const String* Name>
-AttributeNode<XmlTag<String,Ns,Name>>
-XmlTag<String,Ns,Name>::operator=(const String& val) const {
-    return AttributeNode<XmlTag<String,Ns,Name>>(val);
-}
 
 template <typename Tag_, typename... Atts>
 struct ElementStart {
