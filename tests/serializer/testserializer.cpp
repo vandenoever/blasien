@@ -19,12 +19,6 @@ private Q_SLOTS: // tests
     void writeElementWithRequiredAttribute();
 };
 
-namespace {
-xhtml11::IdTag id;
-xhtml11::ClassTag class_;
-xhtml11::SrcTag src;
-}
-
 using namespace xhtml11;
 
 void

@@ -70,6 +70,10 @@ struct ImgType {
 
 }
 
+xhtml11::IdTag id;
+xhtml11::ClassTag class_;
+xhtml11::SrcTag src;
+
 template <>
 struct allowed_child_types<xhtml11::XHtmlDocument> {
     using types = std::tuple<xhtml11::HtmlType>;

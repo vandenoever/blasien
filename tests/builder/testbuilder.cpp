@@ -18,11 +18,6 @@ private Q_SLOTS: // tests
     void buildListWithFunctor();
 };
 
-namespace {
-xhtml11::IdTag id;
-xhtml11::ClassTag class_;
-}
-
 using namespace xhtml11;
 
 void
