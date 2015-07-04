@@ -88,14 +88,9 @@ struct is_tuple : std::false_type {};
 
 template <typename... Types>
 struct is_tuple<std::tuple<Types...>> : std::true_type {};
-/*
-template <typename T, typename RequiredAttributes>
-struct required_attributes {
-    typename std::enable_if<
-};*/
 
 template <typename NodeType>
-constexpr auto has_required_attributes(NodeType& t) -> decltype(NodeType::requiredAttributes, bool()) {
+constexpr auto has_required_attributes(const NodeType&) -> decltype(typename NodeType::requiredAttributes(), bool()) {
     return true;
 }
 
@@ -106,7 +101,7 @@ struct required_attributes;
 
 template <typename NodeType>
 struct required_attributes<NodeType, true> {
-    using type = typename NodeType::RequiredAttributes;
+    using type = typename NodeType::requiredAttributes;
 };
 
 template <typename NodeType>
@@ -114,22 +109,66 @@ struct required_attributes<NodeType, false> {
     using type = std::tuple<>;
 };
 
-template <size_t N, typename SetAttributes = std::tuple<>, typename SetReqAttributes = std::tuple<>>
+template <typename NodeType>
+constexpr auto has_allowed_attributes(const NodeType&) -> decltype(typename NodeType::allowedAttributes(), bool()) {
+    return true;
+}
+
+template <typename NodeType>
+constexpr bool has_allowed_attributes(...) { return false; }
+
+template <typename NodeType, bool hasAllowedAttributes>
+struct allowed_attributes;
+
+template <typename NodeType>
+struct allowed_attributes<NodeType, true> {
+    using type = typename NodeType::allowedAttributes;
+};
+
+template <typename NodeType>
+struct allowed_attributes<NodeType, false> {
+    using type = std::tuple<>;
+};
+
+template <typename Type, typename Tuple>
+struct tuple_contains_type;
+
+template <typename Type, typename... Types>
+struct tuple_contains_type<Type, std::tuple<Type, Types...>> {
+    static const bool value = true;
+};
+
+template <typename Type, typename T, typename... Types>
+struct tuple_contains_type<Type, std::tuple<T, Types...>> {
+    static const bool value = tuple_contains_type<Type, std::tuple<Types...>>::value;
+};
+
+template <typename Type>
+struct tuple_contains_type<Type, std::tuple<>> {
+    static const bool value = false;
+};
+
+template <size_t N, typename NodeType, typename SetAttributes = std::tuple<>, typename SetReqAttributes = std::tuple<>>
 struct write_attributes {
     template<typename Sink, typename... T>
     typename std::enable_if<N!=sizeof...(T),void>::type
     write(const Sink& sink, const std::tuple<T...>& t) const {
-        using XmlTag = typename std::remove_reference<decltype(std::get<N>(t))>::type::XmlTag;
+        using RequiredAttributes = typename required_attributes<NodeType, has_required_attributes(NodeType())>::type;
+        using AllowedAttributes = typename allowed_attributes<NodeType, has_allowed_attributes(NodeType())>::type;
+        using Attribute = typename std::remove_reference<decltype(std::get<N>(t))>::type;
+        using XmlTag = typename Attribute::XmlTag;
+        static_assert(tuple_contains_type<XmlTag,AllowedAttributes>::value
+                      || tuple_contains_type<XmlTag,RequiredAttributes>::value, "Attribute is not allowed here.");
+        static_assert(!tuple_contains_type<XmlTag,SetAttributes>::value, "Attribute was set more than once.");
+
         sink.writeAttribute(XmlTag::qname,std::get<N>(t).value);
         using SA = typename tuple_prepend<XmlTag, SetAttributes>::type;
-        write_attributes<N+1, SA>().write(sink, t);
+        write_attributes<N+1, NodeType, SA>().write(sink, t);
     }
     template<typename Sink, typename... T>
     typename std::enable_if<N==sizeof...(T),void>::type
     write(const Sink&, const std::tuple<T...>&) const {
-        // todo: check that all required attributes have been set
         static_assert(is_tuple<SetReqAttributes>::value, "SetReqAttributes must be a std::tuple.");
-        using NodeType = typename Sink::NodeType;
         using RequiredAttributes = typename required_attributes<NodeType, has_required_attributes(NodeType())>::type;
         static_assert(is_tuple<RequiredAttributes>::value, "RequiredAttributes must be a std::tuple.");
         const int setReqAttributes = std::tuple_size<SetReqAttributes>::value;
@@ -142,8 +181,10 @@ template <typename Sink, typename Tag, typename... Atts>
 typename type_from_tag<Sink,Tag>::type
 operator<(const Sink& sink, const ElementStart<Tag, Atts...>& e) {
     sink.startElement(Tag::qname);
-    write_attributes<0>().write(sink, e.atts);
-    return typename type_from_tag<Sink,Tag>::type(sink);
+    using NewSink = typename type_from_tag<Sink,Tag>::type;
+    using NodeType = typename NewSink::NodeType;
+    write_attributes<0, NodeType>().write(sink, e.atts);
+    return NewSink(sink);
 }
 
 template <typename Base, typename Type>

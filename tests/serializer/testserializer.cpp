@@ -16,14 +16,12 @@ private Q_SLOTS: // tests
     void writeWithFunction();
     void writeWithFunctor();
     void writeListWithFunctor();
+    void writeElementWithRequiredAttribute();
 };
 
 namespace {
-const QString idTag = QStringLiteral("id");
-const QString classTag = QStringLiteral("class");
-const QString empty;
-XmlTag<QString,&empty, &idTag> id;
-XmlTag<QString,&empty, &classTag> class_;
+xhtml11::IdTag id;
+xhtml11::ClassTag class_;
 }
 
 using namespace xhtml11;
@@ -141,6 +139,19 @@ TestSerializer::writeListWithFunctor() {
       <f
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head><n1:title>A</n1:title></n1:head><n1:head><n1:title>B</n1:title></n1:head></n1:html>"));
+}
+void
+TestSerializer::writeElementWithRequiredAttribute() {
+    QString r;
+    QXmlStreamWriter stream(&r);
+    XmlWriter<xhtml11::XHtmlDocument>(stream)
+    <html
+      <body
+//        <img
+//        >img
+      >body
+    >html;
+
 }
 
 QTEST_APPLESS_MAIN(TestSerializer)

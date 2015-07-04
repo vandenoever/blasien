@@ -24,9 +24,7 @@ private Q_SLOTS: // tests
 using namespace xhtml11;
 
 namespace {
-const QString idTag = QStringLiteral("id");
-const QString empty;
-XmlTag<QString,&empty, &idTag> id;
+xhtml11::IdTag id;
 
 QDomDocument getExampleDoc1() {
     QDomDocument dom("test");

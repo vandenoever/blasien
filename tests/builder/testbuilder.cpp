@@ -19,11 +19,8 @@ private Q_SLOTS: // tests
 };
 
 namespace {
-const QString idTag = QStringLiteral("id");
-const QString classTag = QStringLiteral("class");
-const QString empty;
-XmlTag<QString,&empty, &idTag> id;
-XmlTag<QString,&empty, &classTag> class_;
+xhtml11::IdTag id;
+xhtml11::ClassTag class_;
 }
 
 using namespace xhtml11;

@@ -65,7 +65,7 @@ struct PType {
 struct ImgType {
     using Tag = ImgTag;
     using allowedAttributes = std::tuple<xhtml11::IdTag,xhtml11::ClassTag>;
-    using requiredAttributes = std::tuple<xhtml11::SrcTag>;
+    //using requiredAttributes = std::tuple<xhtml11::SrcTag>;
 };
 
 }
