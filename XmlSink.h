@@ -74,7 +74,8 @@ struct write_attributes {
     template<typename Sink, typename... T>
     typename std::enable_if<N!=sizeof...(T),void>::type
     write(const Sink& sink, const std::tuple<T...>& t) const {
-        sink.writeAttribute(std::get<N>(t).qname, std::get<N>(t).value);
+        using A = typename std::remove_reference<decltype(std::get<N>(t))>::type;
+        sink.writeAttribute(A::XmlTag::qname,std::get<N>(t).value);
         write_attributes<N+1>().write(sink, t);
     }
     template<typename Sink, typename... T>

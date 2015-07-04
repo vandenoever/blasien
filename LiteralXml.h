@@ -57,28 +57,24 @@ struct XmlTag {
         return AttributeName<Self>(*this);
     }
     // set the attribute
-    AttributeNode<String> operator=(const String& val) const;
+    AttributeNode<Self> operator=(const String& val) const;
 };
 
 template <typename String, const String* Ns, const String* Name>
 const QName<String> XmlTag<String, Ns, Name>::qname(*Ns, *Name);
 
-template <typename String>
+template <typename XmlTag_>
 struct AttributeNode {
-    QName<String> qname;
+    using XmlTag = XmlTag_;
+    using String = typename XmlTag::String;
     String value;
-    AttributeNode(const QName<String>& q, const String& v) :qname(q), value(v) {}
-    const AttributeNode& operator=(const AttributeNode& a) {
-        qname = a.qname;
-        value = a.value;
-        return a;
-    }
+    AttributeNode(const String& v) :value(v) {}
 };
 
 template <typename String, const String* Ns, const String* Name>
-AttributeNode<String>
+AttributeNode<XmlTag<String,Ns,Name>>
 XmlTag<String,Ns,Name>::operator=(const String& val) const {
-    return AttributeNode<String>(qname, val);
+    return AttributeNode<XmlTag<String,Ns,Name>>(val);
 }
 
 template <typename Tag_, typename... Atts>
