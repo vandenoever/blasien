@@ -7,7 +7,9 @@ struct TextType;
 struct AnyType;
 
 template <typename NodeType>
-struct allowed_child_types;
+struct allowed_child_types {
+    using types = std::tuple<>;
+};
 
 template <>
 struct allowed_child_types<AnyType> {
@@ -56,6 +58,11 @@ struct type_with_tag<typename Type::Tag, std::tuple<Type, Types...>> {
 template <typename Tag, typename Type, typename... Types>
 struct type_with_tag<Tag, std::tuple<Type, Types...>> {
     using type = typename type_with_tag<Tag, std::tuple<Types...>>::type;
+};
+
+template <typename Tag>
+struct type_with_tag<Tag, std::tuple<>> {
+    using type = void; // signal error
 };
 
 template <typename Sink, typename Tag>
@@ -178,16 +185,25 @@ struct write_attributes {
     }
 };
 
+// print a not completely incomprehensible error messages when nesting
+// in the wrong way.
+template <typename Parent, typename Child, typename ReturnType>
+constexpr void check_nesting() {
+    static_assert(!std::is_void<ReturnType>::value, "Nesting of Child element in Parent element is not allowed.");
+}
+
 template <typename Sink, typename Tag>
 typename std::enable_if<Sink::is_xmlsink && Tag::is_tag,typename type_from_tag<Sink,Tag>::type>::type
 operator<(const Sink& sink, const Tag& tag) {
+    using ReturnType = typename type_from_tag<Sink,Tag>::type;
+    check_nesting<typename Sink::NodeType, Tag, typename ReturnType::NodeType>();
     sink.startElement(tag);
     using NewSink = typename type_from_tag<Sink,Tag>::type;
     using NodeType = typename NewSink::NodeType;
     using RequiredAttributes = typename required_attributes<NodeType, has_required_attributes(NodeType())>::type;
     const int reqAttributes = std::tuple_size<RequiredAttributes>::value;
     static_assert(reqAttributes == 0, "Not all required attributes have been set.");
-    return typename type_from_tag<Sink,Tag>::type(sink);
+    return ReturnType(sink);
 }
 
 template <typename Sink, typename Tag, typename... Atts>
