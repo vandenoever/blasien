@@ -73,13 +73,6 @@ struct tuple_prepend<Type, std::tuple<Types...>> {
     using type = typename std::tuple<Type, Types...>;
 };
 
-template <typename Sink, typename Tag>
-typename std::enable_if<Sink::is_xmlsink && Tag::is_tag,typename type_from_tag<Sink,Tag>::type>::type
-operator<(const Sink& sink, const Tag& tag) {
-    sink.startElement(tag);
-    return typename type_from_tag<Sink,Tag>::type(sink);
-}
-
 template <typename Type>
 struct is_tuple;
 
@@ -150,32 +143,52 @@ struct tuple_contains_type<Type, std::tuple<>> {
 
 template <size_t N, typename NodeType, typename SetAttributes = std::tuple<>, typename SetReqAttributes = std::tuple<>>
 struct write_attributes {
+    using AllowedAttributes = typename allowed_attributes<NodeType, has_allowed_attributes(NodeType())>::type;
+    using RequiredAttributes = typename required_attributes<NodeType, has_required_attributes(NodeType())>::type;
+    static_assert(is_tuple<SetAttributes>::value, "SetAttributes must be a std::tuple.");
+    static_assert(is_tuple<SetReqAttributes>::value, "SetReqAttributes must be a std::tuple.");
+    static_assert(is_tuple<AllowedAttributes>::value, "AllowedAttributes must be a std::tuple.");
+    static_assert(is_tuple<RequiredAttributes>::value, "RequiredAttributes must be a std::tuple.");
+
     template<typename Sink, typename... T>
     typename std::enable_if<N!=sizeof...(T),void>::type
     write(const Sink& sink, const std::tuple<T...>& t) const {
-        using RequiredAttributes = typename required_attributes<NodeType, has_required_attributes(NodeType())>::type;
-        using AllowedAttributes = typename allowed_attributes<NodeType, has_allowed_attributes(NodeType())>::type;
         using Attribute = typename std::remove_reference<decltype(std::get<N>(t))>::type;
         using XmlTag = typename Attribute::XmlTag;
         static_assert(tuple_contains_type<XmlTag,AllowedAttributes>::value
                       || tuple_contains_type<XmlTag,RequiredAttributes>::value, "Attribute is not allowed here.");
-        static_assert(!tuple_contains_type<XmlTag,SetAttributes>::value, "Attribute was set more than once.");
+        static_assert(!tuple_contains_type<XmlTag,SetAttributes>::value, "Attribute was already set on this element.");
 
         sink.writeAttribute(XmlTag::qname,std::get<N>(t).value);
+
         using SA = typename tuple_prepend<XmlTag, SetAttributes>::type;
-        write_attributes<N+1, NodeType, SA>().write(sink, t);
+        using A = typename tuple_prepend<XmlTag, SetReqAttributes>::type;
+        static const bool attIsRequired = tuple_contains_type<XmlTag,RequiredAttributes>::value;
+        using SRA = typename std::conditional<attIsRequired,A,SetReqAttributes>::type;
+        write_attributes<N+1, NodeType, SA, SRA>().write(sink, t);
     }
     template<typename Sink, typename... T>
     typename std::enable_if<N==sizeof...(T),void>::type
     write(const Sink&, const std::tuple<T...>&) const {
         static_assert(is_tuple<SetReqAttributes>::value, "SetReqAttributes must be a std::tuple.");
-        using RequiredAttributes = typename required_attributes<NodeType, has_required_attributes(NodeType())>::type;
-        static_assert(is_tuple<RequiredAttributes>::value, "RequiredAttributes must be a std::tuple.");
         const int setReqAttributes = std::tuple_size<SetReqAttributes>::value;
         const int reqAttributes = std::tuple_size<RequiredAttributes>::value;
-        static_assert(setReqAttributes == reqAttributes, "not all required attributes have been set.");
+        static_assert(setReqAttributes <= reqAttributes, "Implementation error.");
+        static_assert(setReqAttributes == reqAttributes, "Not all required attributes have been set.");
     }
 };
+
+template <typename Sink, typename Tag>
+typename std::enable_if<Sink::is_xmlsink && Tag::is_tag,typename type_from_tag<Sink,Tag>::type>::type
+operator<(const Sink& sink, const Tag& tag) {
+    sink.startElement(tag);
+    using NewSink = typename type_from_tag<Sink,Tag>::type;
+    using NodeType = typename NewSink::NodeType;
+    using RequiredAttributes = typename required_attributes<NodeType, has_required_attributes(NodeType())>::type;
+    const int reqAttributes = std::tuple_size<RequiredAttributes>::value;
+    static_assert(reqAttributes == 0, "Not all required attributes have been set.");
+    return typename type_from_tag<Sink,Tag>::type(sink);
+}
 
 template <typename Sink, typename Tag, typename... Atts>
 typename type_from_tag<Sink,Tag>::type

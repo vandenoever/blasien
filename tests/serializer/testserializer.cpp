@@ -22,6 +22,7 @@ private Q_SLOTS: // tests
 namespace {
 xhtml11::IdTag id;
 xhtml11::ClassTag class_;
+xhtml11::SrcTag src;
 }
 
 using namespace xhtml11;
@@ -147,8 +148,8 @@ TestSerializer::writeElementWithRequiredAttribute() {
     XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <body
-//        <img
-//        >img
+        <img(src="urn:ok")
+        >img
       >body
     >html;
 
