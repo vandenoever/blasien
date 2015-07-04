@@ -1,6 +1,8 @@
 #ifndef XMLSINK_H
 #define XMLSINK_H
 
+#include <tuple>
+
 struct TextType;
 struct AnyType;
 
@@ -62,6 +64,15 @@ struct type_from_tag {
     using type = XmlSink<Sink,typename type_with_tag<Tag,types>::type>;
 };
 
+
+template <typename Type, typename Tuple>
+struct tuple_prepend;
+
+template <typename Type, typename... Types>
+struct tuple_prepend<Type, std::tuple<Types...>> {
+    using type = typename std::tuple<Type, Types...>;
+};
+
 template <typename Sink, typename Tag>
 typename std::enable_if<Sink::is_xmlsink && Tag::is_tag,typename type_from_tag<Sink,Tag>::type>::type
 operator<(const Sink& sink, const Tag& tag) {
@@ -69,18 +80,62 @@ operator<(const Sink& sink, const Tag& tag) {
     return typename type_from_tag<Sink,Tag>::type(sink);
 }
 
-template <size_t N>
+template <typename Type>
+struct is_tuple;
+
+template <typename Type>
+struct is_tuple : std::false_type {};
+
+template <typename... Types>
+struct is_tuple<std::tuple<Types...>> : std::true_type {};
+/*
+template <typename T, typename RequiredAttributes>
+struct required_attributes {
+    typename std::enable_if<
+};*/
+
+template <typename NodeType>
+constexpr auto has_required_attributes(NodeType& t) -> decltype(NodeType::requiredAttributes, bool()) {
+    return true;
+}
+
+constexpr bool has_required_attributes(...) { return false; }
+
+template <typename NodeType, bool hasRequiredAttributes>
+struct required_attributes;
+
+template <typename NodeType>
+struct required_attributes<NodeType, true> {
+    using type = typename NodeType::RequiredAttributes;
+};
+
+template <typename NodeType>
+struct required_attributes<NodeType, false> {
+    using type = std::tuple<>;
+};
+
+template <size_t N, typename SetAttributes = std::tuple<>, typename SetReqAttributes = std::tuple<>>
 struct write_attributes {
     template<typename Sink, typename... T>
     typename std::enable_if<N!=sizeof...(T),void>::type
     write(const Sink& sink, const std::tuple<T...>& t) const {
-        using A = typename std::remove_reference<decltype(std::get<N>(t))>::type;
-        sink.writeAttribute(A::XmlTag::qname,std::get<N>(t).value);
-        write_attributes<N+1>().write(sink, t);
+        using XmlTag = typename std::remove_reference<decltype(std::get<N>(t))>::type::XmlTag;
+        sink.writeAttribute(XmlTag::qname,std::get<N>(t).value);
+        using SA = typename tuple_prepend<XmlTag, SetAttributes>::type;
+        write_attributes<N+1, SA>().write(sink, t);
     }
     template<typename Sink, typename... T>
     typename std::enable_if<N==sizeof...(T),void>::type
-    write(const Sink&, const std::tuple<T...>&) const {}
+    write(const Sink&, const std::tuple<T...>&) const {
+        // todo: check that all required attributes have been set
+        static_assert(is_tuple<SetReqAttributes>::value, "SetReqAttributes must be a std::tuple.");
+        using NodeType = typename Sink::NodeType;
+        using RequiredAttributes = typename required_attributes<NodeType, has_required_attributes(NodeType())>::type;
+        static_assert(is_tuple<RequiredAttributes>::value, "RequiredAttributes must be a std::tuple.");
+        const int setReqAttributes = std::tuple_size<SetReqAttributes>::value;
+        const int reqAttributes = std::tuple_size<RequiredAttributes>::value;
+        static_assert(setReqAttributes == reqAttributes, "not all required attributes have been set.");
+    }
 };
 
 template <typename Sink, typename Tag, typename... Atts>
