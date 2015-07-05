@@ -1,7 +1,6 @@
 #include <QObject>
 #include <QTest>
 #include <XmlWriter.h>
-#include <LiteralXml.h>
 #include <XHtml11.h>
 
 class TestSerializer : public QObject

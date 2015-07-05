@@ -1,7 +1,6 @@
 #ifndef XMLBUILDER_H
 #define XMLBUILDER_H
 
-#include <LiteralXml.h>
 #include <XmlSink.h>
 #include <QDomDocument>
 

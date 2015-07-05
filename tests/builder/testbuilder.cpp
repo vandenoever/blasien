@@ -1,7 +1,6 @@
 #include <QObject>
 #include <QTest>
 #include <XmlBuilder.h>
-#include <LiteralXml.h>
 #include <XHtml11.h>
 
 class TestBuilder : public QObject

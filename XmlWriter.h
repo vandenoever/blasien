@@ -2,7 +2,6 @@
 #define XMLWRITER_H
 
 #include <QXmlStreamWriter>
-#include <LiteralXml.h>
 #include <XmlSink.h>
 
 template <typename NodeType_>

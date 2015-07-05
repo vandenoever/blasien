@@ -2,6 +2,7 @@
 #define XMLSINK_H
 
 #include <tuple>
+#include <LiteralXml.h>
 
 struct TextType;
 struct AnyType;
