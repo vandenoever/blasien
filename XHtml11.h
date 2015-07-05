@@ -1,3 +1,14 @@
+/****************************************************************************
+**
+** Copyright (C) 2015 Jos van den Oever
+**
+** This file may be used under the terms of the GNU Lesser General Public
+** License version 3 as published by the Free Software Foundation and appearing
+** in the file lgpl-3.0.txt included in the packaging of this file.  Please
+** review the following information to ensure the GNU Lesser General Public
+** License requirements will be met: https://www.gnu.org/licenses/lgpl.html.
+**
+****************************************************************************/
 #ifndef XHTML11_H
 #define XHTML11_H
 
