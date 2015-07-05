@@ -115,10 +115,10 @@ TestBuilder::buildAttributes() {
     a = n.attributes().namedItem(class_.name());
     QCOMPARE(a.nodeValue(), QString("main"));
 }
-template <typename Base, typename Tag>
-XmlSink<Base,Tag>
-makeHead(const XmlSink<Base,Tag>& w) {
-    return w
+template <typename Sink>
+Sink
+makeHead(const Sink& sink) {
+    return sink
     <head>head;
 }
 void
@@ -137,22 +137,19 @@ TestBuilder::buildWithFunction() {
     QCOMPARE(n.namespaceURI(), head.ns());
     QCOMPARE(n.localName(), head.name());
 }
-class Functor {
-public:
+struct Functor {
     const QString text;
-    Functor(const QString& text_) :text(text_) {}
-    template <typename Base, typename Tag>
-    XmlSink<Base,Tag> operator()(XmlSink<Base,Tag> w) {
-        return w <head<title<text>title>head;
+    template <typename Sink>
+    Sink operator()(const Sink& sink) {
+        return sink <head<title<text>title>head;
     }
 };
 void
 TestBuilder::buildWithFunctor() {
-    Functor f("HELLO");
     QDomDocument dom("test");
     XmlBuilder<XHtmlDocument>(dom)
     <html
-      <f
+      <Functor{"HELLO"}
     >html;
     QCOMPARE(dom.childNodes().length(), 1);
     QDomNode n = dom.firstChild();
@@ -170,25 +167,22 @@ TestBuilder::buildWithFunctor() {
     QDomNode t = n.firstChild();
     QCOMPARE(t.nodeValue(), QString("HELLO"));
 }
-class ListFunctor {
-public:
+struct ListFunctor {
     const std::list<QString> texts;
-    ListFunctor(const std::list<QString>& texts_) :texts(texts_) {}
-    template <typename Base, typename Tag>
-    XmlSink<Base,Tag> operator()(const XmlSink<Base,Tag>& w) {
+    template <typename Sink>
+    Sink operator()(const Sink& sink) {
         for (const QString& t: texts) {
-            w <head<title<t>title>head;
+            sink <head<title<t>title>head;
         }
-        return w;
+        return sink;
     }
 };
 void
 TestBuilder::buildListWithFunctor() {
-    ListFunctor f({"A","B"});
     QDomDocument dom("test");
     XmlBuilder<XHtmlDocument>(dom)
     <html
-      <f
+      <ListFunctor{{"A","B"}}
     >html;
     QCOMPARE(dom.childNodes().length(), 1);
     QDomNode n = dom.firstChild();

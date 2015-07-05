@@ -16,7 +16,7 @@ private Q_SLOTS: // tests
     void writeWithFunction();
     void writeWithFunctor();
     void writeListWithFunctor();
-    void writeElementWithRequiredAttribute();
+    void writeElementWithRequiredAttributes();
 };
 
 using namespace xhtml11;
@@ -75,10 +75,10 @@ TestSerializer::writeAttributes() {
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head id=\"v1.1\" class=\"main\"/></n1:html>"));
 }
-template <typename Base, typename Tag>
-XmlSink<Base,Tag>
-makeHead(const XmlSink<Base,Tag>& w) {
-    return w
+template <typename Sink>
+Sink
+makeHead(const Sink& sink) {
+    return sink
     <head>head;
 }
 void
@@ -92,61 +92,55 @@ TestSerializer::writeWithFunction() {
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head/></n1:html>"));
 }
 
-class Functor {
-public:
+struct Functor {
     const QString text;
-    Functor(const QString& text_) :text(text_) {}
-    template <typename Base, typename Tag>
-    XmlSink<Base,Tag> operator()(const XmlSink<Base,Tag>& w) {
-        return w <head<title<text>title>head;
+    template <typename Sink>
+    Sink operator()(const Sink& sink) {
+        return sink <head<title<text>title>head;
     }
 };
 void
 TestSerializer::writeWithFunctor() {
-    Functor f("HELLO");
     QString r;
     QXmlStreamWriter stream(&r);
     XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
-      <f
+      <Functor{{"HELLO"}}
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head><n1:title>HELLO</n1:title></n1:head></n1:html>"));
 }
-class ListFunctor {
-public:
+struct ListFunctor {
     const std::list<QString> texts;
-    ListFunctor(const std::list<QString>& texts_) :texts(texts_) {}
-    template <typename Base, typename Tag>
-    XmlSink<Base,Tag> operator()(XmlSink<Base,Tag> w) {
+    template <typename Sink>
+    Sink operator()(const Sink& sink) {
         for (const QString& t: texts) {
-            w <head<title<t>title>head;
+            sink <head<title<t>title>head;
         }
-        return w;
+        return sink;
     }
 };
 void
 TestSerializer::writeListWithFunctor() {
-    ListFunctor f({"A","B"});
     QString r;
     QXmlStreamWriter stream(&r);
     XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
-      <f
+      <ListFunctor{{"A","B"}}
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:head><n1:title>A</n1:title></n1:head><n1:head><n1:title>B</n1:title></n1:head></n1:html>"));
 }
 void
-TestSerializer::writeElementWithRequiredAttribute() {
+TestSerializer::writeElementWithRequiredAttributes() {
     QString r;
     QXmlStreamWriter stream(&r);
     XmlWriter<xhtml11::XHtmlDocument>(stream)
     <html
       <body
-        <img(src="urn:ok")
+        <img(src="urn:ok",alt="Hello")
         >img
       >body
     >html;
-
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:body><n1:img src=\"urn:ok\" alt=\"Hello\"/></n1:body></n1:html>"));
 }
 
 QTEST_APPLESS_MAIN(TestSerializer)

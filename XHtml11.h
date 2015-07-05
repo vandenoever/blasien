@@ -14,6 +14,7 @@ const QString imgTag = QStringLiteral("img");
 const QString idTag = QStringLiteral("id");
 const QString classTag = QStringLiteral("class");
 const QString srcTag = QStringLiteral("src");
+const QString altTag = QStringLiteral("alt");
 const QString empty;
 
 using HtmlTag = XmlTag<QString,&htmlns, &htmlTag>;
@@ -26,6 +27,7 @@ using ImgTag = XmlTag<QString,&htmlns, &imgTag>;
 using IdTag = XmlTag<QString,&empty, &idTag>;
 using ClassTag = XmlTag<QString,&empty, &classTag>;
 using SrcTag = XmlTag<QString,&empty, &srcTag>;
+using AltTag = XmlTag<QString,&empty, &altTag>;
 
 static HtmlTag html;
 static HeadTag head;
@@ -65,7 +67,7 @@ struct PType {
 struct ImgType {
     using Tag = ImgTag;
     using allowedAttributes = std::tuple<xhtml11::IdTag,xhtml11::ClassTag>;
-    using requiredAttributes = std::tuple<xhtml11::SrcTag>;
+    using requiredAttributes = std::tuple<xhtml11::SrcTag,xhtml11::AltTag>;
 };
 
 }
@@ -73,6 +75,7 @@ struct ImgType {
 xhtml11::IdTag id;
 xhtml11::ClassTag class_;
 xhtml11::SrcTag src;
+xhtml11::AltTag alt;
 
 template <>
 struct allowed_child_types<xhtml11::XHtmlDocument> {
