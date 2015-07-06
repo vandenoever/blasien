@@ -16,6 +16,7 @@ private Q_SLOTS: // tests
     void writeWithFunctor();
     void writeListWithFunctor();
     void writeElementWithRequiredAttributes();
+    void writeLoop();
 };
 
 using namespace xhtml11;
@@ -140,6 +141,27 @@ TestSerializer::writeElementWithRequiredAttributes() {
       >body
     >html;
     QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:body><n1:img src=\"urn:ok\" alt=\"Hello\"/></n1:body></n1:html>"));
+}
+void
+TestSerializer::writeLoop() {
+    QString r;
+    QXmlStreamWriter stream(&r);
+    auto items = std::list<QString>({"A","B"});
+    XmlWriter<xhtml11::XHtmlDocument> xml(stream);
+    // in c++14 one could use 'auto' in the lambda instead of deriving the Sink type
+    using Sink = decltype(xml<html<body);
+
+    xml
+    <html
+        <body
+            <for_each(items, [](Sink sink, const QString& text){return sink
+                <p
+                    <text
+                >p;
+            })
+        >body
+    >html;
+    QCOMPARE(r, QString("<n1:html xmlns:n1=\"http://www.w3.org/1999/xhtml\"><n1:body><n1:p>A</n1:p><n1:p>B</n1:p></n1:body></n1:html>"));
 }
 
 QTEST_APPLESS_MAIN(TestSerializer)

@@ -39,22 +39,23 @@ public:
     static constexpr bool is_xmlsink = true;
     using NodeType = NodeType_;
     using StringType = typename Base::StringType;
-    const Base& base;
-    inline XmlSink(const Base& b) :base(b) {}
+    const Base* basePtr;
+    const Base& base() const { return *basePtr; }
+    inline XmlSink(const Base& b) :basePtr(&b) {}
     template <typename ChildTag>
     inline void startElement(const ChildTag& tag) const {
-        base.startElement(tag);
+        basePtr->startElement(tag);
     }
     inline void endElement() const {
-        base.endElement();
+        basePtr->endElement();
     }
     template <typename ChildTag, typename String>
     inline void writeAttribute(const ChildTag& tag, const String& value) const {
-        base.writeAttribute(tag, value);
+        basePtr->writeAttribute(tag, value);
     }
     template <typename String>
     inline void writeCharacters(const String& val) const {
-        base.writeCharacters(val);
+        basePtr->writeCharacters(val);
     }
 };
 
@@ -189,7 +190,6 @@ struct write_attributes {
     template<typename Sink, typename... T>
     typename std::enable_if<N==sizeof...(T),void>::type
     write(const Sink&, const std::tuple<T...>&) const {
-        static_assert(is_tuple<SetReqAttributes>::value, "SetReqAttributes must be a std::tuple.");
         const int setReqAttributes = std::tuple_size<SetReqAttributes>::value;
         const int reqAttributes = std::tuple_size<RequiredAttributes>::value;
         static_assert(setReqAttributes <= reqAttributes, "Implementation error.");
@@ -231,7 +231,7 @@ operator<(const Sink& sink, const ElementStart<Tag, Atts...>& e) {
 template <typename Base, typename Type>
 Base operator>(const XmlSink<Base,Type>& sink, const typename Type::Tag&) {
     sink.endElement();
-    return sink.base;
+    return sink.base();
 }
 
 template <typename T, typename Types>
@@ -270,7 +270,6 @@ struct sink_allows_text<Sink, true> {
 template <typename Sink>
 typename std::enable_if<sink_allows_text<Sink,Sink::is_xmlsink>::value, Sink>::type
 operator<(const Sink& sink, const typename Sink::StringType& val) {
-    static_assert(!std::is_same<Sink,QString>(),"ohoh");
     sink.writeCharacters(val);
     return sink;
 }
@@ -284,6 +283,34 @@ operator<(const Sink& sink, F f) {
 template<typename Sink>
 Sink operator<(const Sink& sink, Sink (*f)(const Sink&)) {
     return f(sink);
+}
+
+/**
+ * Helper functor for the for_each function.
+ */
+template <typename Items, typename Lambda>
+struct ForEach {
+    const Items& items;
+    Lambda lambda;
+    template <typename Sink>
+    Sink operator()(const Sink& sink) {
+        auto s = sink;
+        for (auto i: items) {
+            s = lambda(s, i);
+        }
+        return s;
+    }
+};
+
+/**
+ * Create a functor that calls the lambda function for each item in the
+ * collection. The lambda function creates XML that is passed into the
+ * sink.
+ */
+template <typename Items, typename Lambda>
+ForEach<Items, Lambda>
+for_each(const Items& items, Lambda lambda) {
+    return ForEach<Items,Lambda>{items, lambda};
 }
 
 #endif
