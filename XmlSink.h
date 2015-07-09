@@ -15,24 +15,6 @@
 #include <tuple>
 #include <LiteralXml.h>
 
-struct TextType;
-struct AnyType;
-
-template <typename NodeType>
-struct allowed_child_types {
-    using types = std::tuple<>;
-};
-
-template <>
-struct allowed_child_types<AnyType> {
-    using types = std::tuple<AnyType,TextType>;
-};
-
-template <>
-struct allowed_child_types<TextType> {
-    using types = std::tuple<>;
-};
-
 template <typename Base, typename NodeType_>
 class XmlSink {
 public:

@@ -89,4 +89,22 @@ struct ElementStart {
     ElementStart(Atts... atts_) :atts(atts_...) {}
 };
 
+struct TextType;
+struct AnyType;
+
+template <typename NodeType>
+struct allowed_child_types {
+    using types = std::tuple<>;
+};
+
+template <>
+struct allowed_child_types<AnyType> {
+    using types = std::tuple<AnyType,TextType>;
+};
+
+template <>
+struct allowed_child_types<TextType> {
+    using types = std::tuple<>;
+};
+
 #endif // LITERALXML_H
