@@ -1,0 +1,2468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 'simplified' with http://debeissat.nicolas.free.fr/relaxng_simplification.php -->
+<rng:grammar xmlns:rng="http://relaxng.org/ns/structure/1.0">
+  <rng:start>
+    <choice>
+      <choice>
+        <choice>
+          <choice>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <rng:ref name="__element-elt-id0x17eaba80"/>
+                                        <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                      </choice>
+                                      <rng:ref name="__group-elt-id0x17fcba80"/>
+                                    </choice>
+                                    <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                  </choice>
+                                  <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                </choice>
+                                <rng:ref name="__optional-elt-id0x17fccf00"/>
+                              </choice>
+                              <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                            </choice>
+                            <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                          </choice>
+                          <rng:ref name="__list-elt-id0x181dff80"/>
+                        </choice>
+                        <rng:ref name="__mixed-elt-id0x181e0280"/>
+                      </choice>
+                      <rng:ref name="__ref-elt-id0x181e0580"/>
+                    </choice>
+                    <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                  </choice>
+                  <rng:ref name="__empty-elt-id0x181e1100"/>
+                </choice>
+                <rng:ref name="__text-elt-id0x181e1400"/>
+              </choice>
+              <rng:ref name="__value-elt-id0x181e1700"/>
+            </choice>
+            <rng:ref name="__data-elt-id0x182e5900"/>
+          </choice>
+          <rng:ref name="__notAllowed-elt-id0x18428580"/>
+        </choice>
+        <rng:ref name="__externalRef-elt-id0x184c5780"/>
+      </choice>
+      <rng:ref name="__grammar-elt-id0x184dcd80"/>
+    </choice>
+  </rng:start>
+  <rng:define name="start-element-id0x17b17300">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">start</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:attribute>
+              <rng:name ns="">combine</rng:name>
+              <rng:choice>
+                <rng:value ns="" type="token" datatypeLibrary="">choice</rng:value>
+                <rng:value ns="" type="token" datatypeLibrary="">interleave</rng:value>
+              </rng:choice>
+            </rng:attribute>
+          </rng:choice>
+          <rng:group>
+            <rng:group>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">ns</rng:name>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:choice>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">datatypeLibrary</rng:name>
+                  <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:attribute>
+                  <rng:anyName>
+                    <rng:except>
+                      <rng:choice>
+                        <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                        <rng:nsName ns=""/>
+                      </rng:choice>
+                    </rng:except>
+                  </rng:anyName>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:oneOrMore>
+            </rng:choice>
+          </rng:group>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <choice>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <rng:ref name="__element-elt-id0x17eaba80"/>
+                                              <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                            </choice>
+                                            <rng:ref name="__group-elt-id0x17fcba80"/>
+                                          </choice>
+                                          <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                        </choice>
+                                        <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                      </choice>
+                                      <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                    </choice>
+                                    <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                  </choice>
+                                  <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                </choice>
+                                <rng:ref name="__list-elt-id0x181dff80"/>
+                              </choice>
+                              <rng:ref name="__mixed-elt-id0x181e0280"/>
+                            </choice>
+                            <rng:ref name="__ref-elt-id0x181e0580"/>
+                          </choice>
+                          <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                        </choice>
+                        <rng:ref name="__empty-elt-id0x181e1100"/>
+                      </choice>
+                      <rng:ref name="__text-elt-id0x181e1400"/>
+                    </choice>
+                    <rng:ref name="__value-elt-id0x181e1700"/>
+                  </choice>
+                  <rng:ref name="__data-elt-id0x182e5900"/>
+                </choice>
+                <rng:ref name="__notAllowed-elt-id0x18428580"/>
+              </choice>
+              <rng:ref name="__externalRef-elt-id0x184c5780"/>
+            </choice>
+            <rng:ref name="__grammar-elt-id0x184dcd80"/>
+          </choice>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="define-element-id0x17b17800">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">define</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:attribute>
+              <rng:name ns="">name</rng:name>
+              <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="NCName"/>
+            </rng:attribute>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">combine</rng:name>
+                <rng:choice>
+                  <rng:value ns="" type="token" datatypeLibrary="">choice</rng:value>
+                  <rng:value ns="" type="token" datatypeLibrary="">interleave</rng:value>
+                </rng:choice>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:group>
+            <rng:group>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">ns</rng:name>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:choice>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">datatypeLibrary</rng:name>
+                  <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:attribute>
+                  <rng:anyName>
+                    <rng:except>
+                      <rng:choice>
+                        <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                        <rng:nsName ns=""/>
+                      </rng:choice>
+                    </rng:except>
+                  </rng:anyName>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:oneOrMore>
+            </rng:choice>
+          </rng:group>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="any-id0x17c2f280">
+    <rng:element>
+      <rng:anyName/>
+      <rng:choice>
+        <rng:empty/>
+        <rng:oneOrMore>
+          <choice>
+            <choice>
+              <rng:attribute>
+                <rng:anyName/>
+                <rng:text/>
+              </rng:attribute>
+              <rng:text/>
+            </choice>
+            <rng:ref name="any-id0x17c2f280"/>
+          </choice>
+        </rng:oneOrMore>
+      </rng:choice>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__element-elt-id0x17eaba80">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">element</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:choice>
+            <rng:attribute>
+              <rng:name ns="">name</rng:name>
+              <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="QName"/>
+            </rng:attribute>
+            <rng:interleave>
+              <rng:choice>
+                <rng:empty/>
+                <rng:oneOrMore>
+                  <rng:ref name="__-elt-id0x1919a000"/>
+                </rng:oneOrMore>
+              </rng:choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <rng:ref name="__name-elt-id0x1911a180"/>
+                    <rng:ref name="__anyName-elt-id0x1911a480"/>
+                  </choice>
+                  <rng:ref name="__nsName-elt-id0x19138b00"/>
+                </choice>
+                <rng:ref name="__choice-elt-id0x19138e00"/>
+              </choice>
+            </rng:interleave>
+          </rng:choice>
+          <rng:group>
+            <rng:group>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">ns</rng:name>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:choice>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">datatypeLibrary</rng:name>
+                  <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:attribute>
+                  <rng:anyName>
+                    <rng:except>
+                      <rng:choice>
+                        <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                        <rng:nsName ns=""/>
+                      </rng:choice>
+                    </rng:except>
+                  </rng:anyName>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:oneOrMore>
+            </rng:choice>
+          </rng:group>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__attribute-elt-id0x17eac100">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">attribute</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:group>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">ns</rng:name>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:choice>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">datatypeLibrary</rng:name>
+                  <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:attribute>
+                  <rng:anyName>
+                    <rng:except>
+                      <rng:choice>
+                        <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                        <rng:nsName ns=""/>
+                      </rng:choice>
+                    </rng:except>
+                  </rng:anyName>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:oneOrMore>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:attribute>
+              <rng:name ns="">name</rng:name>
+              <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="QName"/>
+            </rng:attribute>
+            <rng:interleave>
+              <rng:choice>
+                <rng:empty/>
+                <rng:oneOrMore>
+                  <rng:ref name="__-elt-id0x1919a000"/>
+                </rng:oneOrMore>
+              </rng:choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <rng:ref name="__name-elt-id0x1911a180"/>
+                    <rng:ref name="__anyName-elt-id0x1911a480"/>
+                  </choice>
+                  <rng:ref name="__nsName-elt-id0x19138b00"/>
+                </choice>
+                <rng:ref name="__choice-elt-id0x19138e00"/>
+              </choice>
+            </rng:interleave>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:choice>
+            <rng:empty/>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:choice>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__group-elt-id0x17fcba80">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">group</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__interleave-elt-id0x17fcbd80">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">interleave</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__choice-elt-id0x17fcc080">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">choice</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__optional-elt-id0x17fccf00">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">optional</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__zeroOrMore-elt-id0x181df900">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">zeroOrMore</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__oneOrMore-elt-id0x181dfc80">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">oneOrMore</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__list-elt-id0x181dff80">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">list</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__mixed-elt-id0x181e0280">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">mixed</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__ref-elt-id0x181e0580">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">ref</rng:name>
+      <rng:group>
+        <rng:attribute>
+          <rng:name ns="">name</rng:name>
+          <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="NCName"/>
+        </rng:attribute>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__parentRef-elt-id0x181e0a00">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">parentRef</rng:name>
+      <rng:group>
+        <rng:attribute>
+          <rng:name ns="">name</rng:name>
+          <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="NCName"/>
+        </rng:attribute>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__empty-elt-id0x181e1100">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">empty</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:choice>
+          <rng:empty/>
+          <rng:oneOrMore>
+            <rng:ref name="__-elt-id0x1919a000"/>
+          </rng:oneOrMore>
+        </rng:choice>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__text-elt-id0x181e1400">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">text</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:choice>
+          <rng:empty/>
+          <rng:oneOrMore>
+            <rng:ref name="__-elt-id0x1919a000"/>
+          </rng:oneOrMore>
+        </rng:choice>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__value-elt-id0x181e1700">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">value</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:attribute>
+              <rng:name ns="">type</rng:name>
+              <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="NCName"/>
+            </rng:attribute>
+          </rng:choice>
+          <rng:group>
+            <rng:group>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">ns</rng:name>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:choice>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">datatypeLibrary</rng:name>
+                  <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:attribute>
+                  <rng:anyName>
+                    <rng:except>
+                      <rng:choice>
+                        <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                        <rng:nsName ns=""/>
+                      </rng:choice>
+                    </rng:except>
+                  </rng:anyName>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:oneOrMore>
+            </rng:choice>
+          </rng:group>
+        </rng:group>
+        <rng:text/>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__data-elt-id0x182e5900">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">data</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:attribute>
+            <rng:name ns="">type</rng:name>
+            <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="NCName"/>
+          </rng:attribute>
+          <rng:group>
+            <rng:group>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">ns</rng:name>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:choice>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">datatypeLibrary</rng:name>
+                  <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:attribute>
+                  <rng:anyName>
+                    <rng:except>
+                      <rng:choice>
+                        <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                        <rng:nsName ns=""/>
+                      </rng:choice>
+                    </rng:except>
+                  </rng:anyName>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:oneOrMore>
+            </rng:choice>
+          </rng:group>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:ref name="__param-elt-id0x18426c80"/>
+              </rng:oneOrMore>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:ref name="__except-elt-id0x18427580"/>
+            </rng:choice>
+          </rng:group>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__param-elt-id0x18426c80">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">param</rng:name>
+      <rng:group>
+        <rng:attribute>
+          <rng:name ns="">name</rng:name>
+          <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="NCName"/>
+        </rng:attribute>
+        <rng:text/>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__except-elt-id0x18427580">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">except</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <choice>
+                    <choice>
+                      <choice>
+                        <choice>
+                          <choice>
+                            <choice>
+                              <choice>
+                                <choice>
+                                  <choice>
+                                    <choice>
+                                      <choice>
+                                        <choice>
+                                          <choice>
+                                            <choice>
+                                              <choice>
+                                                <rng:ref name="__element-elt-id0x17eaba80"/>
+                                                <rng:ref name="__attribute-elt-id0x17eac100"/>
+                                              </choice>
+                                              <rng:ref name="__group-elt-id0x17fcba80"/>
+                                            </choice>
+                                            <rng:ref name="__interleave-elt-id0x17fcbd80"/>
+                                          </choice>
+                                          <rng:ref name="__choice-elt-id0x17fcc080"/>
+                                        </choice>
+                                        <rng:ref name="__optional-elt-id0x17fccf00"/>
+                                      </choice>
+                                      <rng:ref name="__zeroOrMore-elt-id0x181df900"/>
+                                    </choice>
+                                    <rng:ref name="__oneOrMore-elt-id0x181dfc80"/>
+                                  </choice>
+                                  <rng:ref name="__list-elt-id0x181dff80"/>
+                                </choice>
+                                <rng:ref name="__mixed-elt-id0x181e0280"/>
+                              </choice>
+                              <rng:ref name="__ref-elt-id0x181e0580"/>
+                            </choice>
+                            <rng:ref name="__parentRef-elt-id0x181e0a00"/>
+                          </choice>
+                          <rng:ref name="__empty-elt-id0x181e1100"/>
+                        </choice>
+                        <rng:ref name="__text-elt-id0x181e1400"/>
+                      </choice>
+                      <rng:ref name="__value-elt-id0x181e1700"/>
+                    </choice>
+                    <rng:ref name="__data-elt-id0x182e5900"/>
+                  </choice>
+                  <rng:ref name="__notAllowed-elt-id0x18428580"/>
+                </choice>
+                <rng:ref name="__externalRef-elt-id0x184c5780"/>
+              </choice>
+              <rng:ref name="__grammar-elt-id0x184dcd80"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__notAllowed-elt-id0x18428580">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">notAllowed</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:choice>
+          <rng:empty/>
+          <rng:oneOrMore>
+            <rng:ref name="__-elt-id0x1919a000"/>
+          </rng:oneOrMore>
+        </rng:choice>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__externalRef-elt-id0x184c5780">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">externalRef</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:attribute>
+            <rng:name ns="">href</rng:name>
+            <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+          </rng:attribute>
+          <rng:group>
+            <rng:group>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">ns</rng:name>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:choice>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">datatypeLibrary</rng:name>
+                  <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:attribute>
+                  <rng:anyName>
+                    <rng:except>
+                      <rng:choice>
+                        <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                        <rng:nsName ns=""/>
+                      </rng:choice>
+                    </rng:except>
+                  </rng:anyName>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:oneOrMore>
+            </rng:choice>
+          </rng:group>
+        </rng:group>
+        <rng:choice>
+          <rng:empty/>
+          <rng:oneOrMore>
+            <rng:ref name="__-elt-id0x1919a000"/>
+          </rng:oneOrMore>
+        </rng:choice>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__grammar-elt-id0x184dcd80">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">grammar</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <choice>
+                <choice>
+                  <choice>
+                    <rng:ref name="start-element-id0x17b17300"/>
+                    <rng:ref name="define-element-id0x17b17800"/>
+                  </choice>
+                  <rng:ref name="__div-elt-id0x18aa2e00"/>
+                </choice>
+                <rng:ref name="__include-elt-id0x18aa3100"/>
+              </choice>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__div-elt-id0x18aa2e00">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">div</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <choice>
+                <choice>
+                  <choice>
+                    <rng:ref name="start-element-id0x17b17300"/>
+                    <rng:ref name="define-element-id0x17b17800"/>
+                  </choice>
+                  <rng:ref name="__div-elt-id0x18aa2e00"/>
+                </choice>
+                <rng:ref name="__include-elt-id0x18aa3100"/>
+              </choice>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__include-elt-id0x18aa3100">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">include</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:attribute>
+            <rng:name ns="">href</rng:name>
+            <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+          </rng:attribute>
+          <rng:group>
+            <rng:group>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">ns</rng:name>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:choice>
+              <rng:choice>
+                <rng:empty/>
+                <rng:attribute>
+                  <rng:name ns="">datatypeLibrary</rng:name>
+                  <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+                </rng:attribute>
+              </rng:choice>
+            </rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:oneOrMore>
+                <rng:attribute>
+                  <rng:anyName>
+                    <rng:except>
+                      <rng:choice>
+                        <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                        <rng:nsName ns=""/>
+                      </rng:choice>
+                    </rng:except>
+                  </rng:anyName>
+                  <rng:text/>
+                </rng:attribute>
+              </rng:oneOrMore>
+            </rng:choice>
+          </rng:group>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <choice>
+                <choice>
+                  <rng:ref name="start-element-id0x17b17300"/>
+                  <rng:ref name="define-element-id0x17b17800"/>
+                </choice>
+                <rng:ref name="__div-elt-id0x18aa3b80"/>
+              </choice>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__div-elt-id0x18aa3b80">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">div</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <choice>
+                <choice>
+                  <rng:ref name="start-element-id0x17b17300"/>
+                  <rng:ref name="define-element-id0x17b17800"/>
+                </choice>
+                <rng:ref name="__div-elt-id0x18aa3b80"/>
+              </choice>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__name-elt-id0x1911a180">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">name</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="QName"/>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__anyName-elt-id0x1911a480">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">anyName</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:choice>
+            <rng:empty/>
+            <rng:ref name="__except-elt-id0x19139300"/>
+          </rng:choice>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__nsName-elt-id0x19138b00">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">nsName</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:choice>
+            <rng:empty/>
+            <rng:ref name="__except-elt-id0x19139300"/>
+          </rng:choice>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__choice-elt-id0x19138e00">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">choice</rng:name>
+      <rng:group>
+        <rng:group>
+          <rng:group>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">ns</rng:name>
+                <rng:text/>
+              </rng:attribute>
+            </rng:choice>
+            <rng:choice>
+              <rng:empty/>
+              <rng:attribute>
+                <rng:name ns="">datatypeLibrary</rng:name>
+                <rng:data datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes" type="anyURI"/>
+              </rng:attribute>
+            </rng:choice>
+          </rng:group>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:attribute>
+                <rng:anyName>
+                  <rng:except>
+                    <rng:choice>
+                      <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+                      <rng:nsName ns=""/>
+                    </rng:choice>
+                  </rng:except>
+                </rng:anyName>
+                <rng:text/>
+              </rng:attribute>
+            </rng:oneOrMore>
+          </rng:choice>
+        </rng:group>
+        <rng:interleave>
+          <rng:choice>
+            <rng:empty/>
+            <rng:oneOrMore>
+              <rng:ref name="__-elt-id0x1919a000"/>
+            </rng:oneOrMore>
+          </rng:choice>
+          <rng:oneOrMore>
+            <choice>
+              <choice>
+                <choice>
+                  <rng:ref name="__name-elt-id0x1911a180"/>
+                  <rng:ref name="__anyName-elt-id0x1911a480"/>
+                </choice>
+                <rng:ref name="__nsName-elt-id0x19138b00"/>
+              </choice>
+              <rng:ref name="__choice-elt-id0x19138e00"/>
+            </choice>
+          </rng:oneOrMore>
+        </rng:interleave>
+      </rng:group>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__except-elt-id0x19139300">
+    <rng:element>
+      <rng:name ns="http://relaxng.org/ns/structure/1.0">except</rng:name>
+      <rng:interleave>
+        <rng:choice>
+          <rng:empty/>
+          <rng:oneOrMore>
+            <rng:ref name="__-elt-id0x1919a000"/>
+          </rng:oneOrMore>
+        </rng:choice>
+        <rng:oneOrMore>
+          <choice>
+            <choice>
+              <choice>
+                <rng:ref name="__name-elt-id0x1911a180"/>
+                <rng:ref name="__anyName-elt-id0x1911a480"/>
+              </choice>
+              <rng:ref name="__nsName-elt-id0x19138b00"/>
+            </choice>
+            <rng:ref name="__choice-elt-id0x19138e00"/>
+          </choice>
+        </rng:oneOrMore>
+      </rng:interleave>
+    </rng:element>
+  </rng:define>
+  <rng:define name="__-elt-id0x1919a000">
+    <rng:element>
+      <rng:anyName>
+        <rng:except>
+          <rng:nsName ns="http://relaxng.org/ns/structure/1.0"/>
+        </rng:except>
+      </rng:anyName>
+      <rng:choice>
+        <rng:empty/>
+        <rng:oneOrMore>
+          <choice>
+            <choice>
+              <rng:attribute>
+                <rng:anyName/>
+                <rng:text/>
+              </rng:attribute>
+              <rng:text/>
+            </choice>
+            <rng:ref name="any-id0x17c2f280"/>
+          </choice>
+        </rng:oneOrMore>
+      </rng:choice>
+    </rng:element>
+  </rng:define>
+</rng:grammar>
