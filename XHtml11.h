@@ -40,13 +40,13 @@ using ClassTag = XmlTag<QString,&empty, &classTag>;
 using SrcTag = XmlTag<QString,&empty, &srcTag>;
 using AltTag = XmlTag<QString,&empty, &altTag>;
 
-static HtmlTag html;
-static HeadTag head;
-static TitleTag title;
-static BodyTag body;
-static DivTag div;
-static PTag p;
-static ImgTag img;
+const HtmlTag html;
+const HeadTag head;
+const TitleTag title;
+const BodyTag body;
+const DivTag div;
+const PTag p;
+const ImgTag img;
 
 struct XHtmlDocument {
 };
@@ -83,10 +83,10 @@ struct ImgType {
 
 }
 
-xhtml11::IdTag id;
-xhtml11::ClassTag class_;
-xhtml11::SrcTag src;
-xhtml11::AltTag alt;
+const xhtml11::IdTag id;
+const xhtml11::ClassTag class_;
+const xhtml11::SrcTag src;
+const xhtml11::AltTag alt;
 
 template <>
 struct allowed_child_types<xhtml11::XHtmlDocument> {
