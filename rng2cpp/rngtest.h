@@ -34,13 +34,14 @@ struct ParamList {
 template <Uri U, LocalName L>
 struct Datatype;
 /** NameClasses */
-struct AnyName {};
+struct AnyName;
 template <typename NameClass>
 struct AnyNameExcept  {
     const NameClass& nameClass;
     explicit constexpr AnyNameExcept(const NameClass& n)
         :nameClass(n) {}
 };
+// Name is not defined, use QName, which is identical
 template <String U>
 struct NsName {
     static constexpr String Uri = U;
@@ -172,8 +173,8 @@ template <typename Pattern>
 struct endTagDeriv;
 
 /** specializations */
-template <String U2, String L2>
-struct contains_struct<AnyName,QName<U2,L2>> {
+template <String NS, String LN>
+struct contains_struct<AnyName,QName<NS,LN>> {
     static constexpr bool value = true;
 };
 template <typename NameClass, String U2, String L2>
@@ -606,7 +607,7 @@ template <typename Pattern>
 struct endTagDeriv {
     using type = NotAllowed;
 };
-}
+} // functions
 } // rng
 
 #endif // RNGTEST_H

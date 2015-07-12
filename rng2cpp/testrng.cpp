@@ -73,5 +73,6 @@ void testImgElement2() {
 }
 }
 
-int main(int , char *[]) {
+int main2(int , char *[]) {
+    return 0;
 }

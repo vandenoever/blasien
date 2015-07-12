@@ -9,4 +9,5 @@ SOURCES += rng2cpp.cpp \
     testrng.cpp
 
 HEADERS += \
-    rngtest.h
+    rngtest.h \
+    rng.h

@@ -4,6 +4,7 @@
 #include <QDomDocument>
 #include <QDebug>
 #include <QUrl>
+#include <rngtest.h>
 
 QDomDocument loadDOM(const QString& url);
 
@@ -192,17 +193,110 @@ parseGrammar(const QDomElement& grammar) {
     ParseState parseState = parseCommonAttributes(grammar);
 }
 
+QString
+getName(const QDomElement& e) {
+    return e.attribute("name").remove("-");
+}
+
+struct QName {
+    QString ns;
+    QString localName;
+    bool operator<(const QName& o) const {
+        return ns != o.ns ? ns < o.ns : localName < o.localName;
+    }
+};
+
+void
+getQNames(const QDomElement& e, QMap<QString,QString>& nsmap, QMap<QString,QString>& namemap, QMap<QName,QString>& qnamemap) {
+    if (isRng(e, "name")) {
+        QString ns = e.attribute("ns");
+        QString nsvar;
+        if (!ns.isNull()) {
+            if (!nsmap.contains(ns)) {
+                nsvar = QString("ns%1").arg(nsmap.size());
+                nsmap.insert(ns, nsvar);
+            } else {
+                nsvar = nsmap[ns];
+            }
+        }
+        QString name = e.text();
+        QString namevar;
+        if (!name.isNull()) {
+            if (!namemap.contains(name)) {
+                namevar = QString("%1LocalName").arg(name);
+                namemap.insert(name, namevar);
+            } else {
+                namevar = namemap[name];
+            }
+        }
+        QName qname = QName{ns,name};
+        if (!nsvar.isNull() && !namevar.isNull() && !qnamemap.contains(qname)) {
+            QString qnamevar = nsvar + "_" + name + "QName";
+            qnamemap.insert(qname, qnamevar);
+        }
+    }
+    QDomElement c = e.firstChildElement();
+    while (!c.isNull()) {
+        getQNames(c, nsmap, namemap, qnamemap);
+        c = c.nextSiblingElement();
+    }
+}
+QString
+writeNames(const QMap<QString,QString>& map) {
+    QString h;
+    for (auto key: map.keys()) {
+        h += "constexpr char " + map[key] + "[] = \"" + key + "\";\n";
+    }
+    return h;
+}
+QString
+writeQNames(const QMap<QString,QString>& nsmap, const QMap<QString,QString>& namemap, const QMap<QName,QString>& map) {
+    QString h;
+    for (auto key: map.keys()) {
+        h += QString("using %1 = rng::types::QName<%2,%3>;\n").arg(map[key]).arg(nsmap[key.ns]).arg(namemap[key.localName]);
+    }
+    return h;
+}
+
+
+QString
+createHeader(const QDomElement& grammar) {
+
+    QString h;
+    QMap<QString,QString> nsmap;
+    QMap<QString,QString> namemap;
+    QMap<QName,QString> qnamemap;
+    getQNames(grammar, nsmap, namemap, qnamemap);
+    h += writeNames(nsmap);
+    h += writeNames(namemap);
+    h += writeQNames(nsmap, namemap, qnamemap);
+
+    QDomElement c = grammar.firstChildElement("define");
+    while (!c.isNull()) {
+        h += "using " + getName(c) + " = int;\n";
+        c = c.nextSiblingElement("define");
+    }
+    return h;
+}
+#include "rng.h"
+
 void
 convert(const QString& rngfile, const QString& /*outdir*/) {
 
     QDomDocument d = loadDOM(rngfile);
 
     parseGrammar(d.documentElement());
+
+    QString h = createHeader(d.documentElement());
+    QFile f("/home/oever/src/blasien/rng2cpp/rng.h");
+    f.open(QIODevice::WriteOnly);
+    f.write(h.toUtf8());
+    f.close();
 }
 
 }
 
-int main2(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
     QString rngfile;
     QString outdir;
